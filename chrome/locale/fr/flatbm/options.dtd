@@ -1,0 +1,8 @@
+<!ENTITY prefs.title "Options">
+<!ENTITY prefs.buttonSet.back "Afficher le bouton Reculer">
+<!ENTITY prefs.buttonSet.goup "Afficher le bouton Remonter">
+<!ENTITY prefs.expandSubFolders "Développer les sous-dossiers dans la liste des dossiers parents">
+<!ENTITY prefs.clickOpensFolder "Ouvrir le dossier d'un seul clic">
+<!ENTITY prefs.showInSidebarMenu "Ajouter « Afficher dans le panneau latéral » au menu contextuel des dossiers">
+<!ENTITY prefs.showInOrganizerMenu "Ajouter « Organiser les marque-pages… » au menu contextuel d'un dossier">
+<!ENTITY prefs.restart "Le redémarrage de Firefox est nécessaire pour que les changements soient effectifs.">

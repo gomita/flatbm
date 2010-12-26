@@ -1,0 +1,5 @@
+<!ENTITY flatbm.showInSidebar.label "Прикажи у бочној траци">
+<!ENTITY flatbm.showInSidebar.accesskey "Б">
+<!-- LOCALIZATION NOTE : This should be same as organizeBookmarks.label in browser.dtd -->
+<!ENTITY flatbm.showInOrganizer.label "Организуј забелешке...">
+<!ENTITY flatbm.showInOrganizer.accesskey "О">

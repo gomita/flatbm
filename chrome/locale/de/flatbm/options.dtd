@@ -1,0 +1,8 @@
+<!ENTITY prefs.title "Einstellungen">
+<!ENTITY prefs.buttonSet.back "'Zurück'-Schaltfläche anzeigen">
+<!ENTITY prefs.buttonSet.goup "'Aufwärts'-Schaltfläche anzeigen">
+<!ENTITY prefs.expandSubFolders "Unterordner des übergeordneten Ordners aufklappen">
+<!ENTITY prefs.clickOpensFolder "Ordner durch einen einfachen Klick öffnen">
+<!ENTITY prefs.showInSidebarMenu "'In der Sidebar anzeigen' zum Ordner-Kontextmenü hinzufügen">
+<!ENTITY prefs.showInOrganizerMenu "'Lesezeichen verwalten...' zum Ordner-Kontextmenü hinzufügen">
+<!ENTITY prefs.restart "Bitte starten Sie Firefox neu, damit die Änderungen wirksam werden.">

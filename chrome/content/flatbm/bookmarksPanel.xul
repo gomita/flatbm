@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet href="chrome://browser/skin/browser.css"?>
+<?xml-stylesheet href="chrome://browser/skin/places/editBookmarkOverlay.css"?>
+<?xml-stylesheet href="chrome://flatbm/skin/bookmarksPanel.css"?>
+<?xml-stylesheet href="chrome://flatbm/content/bindings.css"?>
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<script type="application/x-javascript" src="chrome://flatbm/content/bookmarksPanel.js" />
+
+	<page id="bookmarksPanel">
+
+		<commandset id="flatbm-commandset">
+			<command id="flatbmCmd:goUp" oncommand="FlatBookmarks.goUp();" />
+			<command id="flatbmCmd:back" oncommand="FlatBookmarks.back();" />
+		</commandset>
+
+		<keyset id="flatbm-keyset">
+			<key id="flatbmKey_goUp" keycode="VK_UP"   modifiers="alt" command="flatbmCmd:goUp" />
+			<key id="flatbmKey_back" keycode="VK_LEFT" modifiers="alt" command="flatbmCmd:back" />
+		</keyset>
+
+		<vbox id="flatbm-outer" insertbefore="bookmarks-view"
+		      ondragenter="FlatBookmarks.handleDropEvents(event);"
+		      ondragover="FlatBookmarks.handleDropEvents(event);"
+		      ondragleave="FlatBookmarks.handleDropEvents(event);"
+		      ondrop="FlatBookmarks.handleDropEvents(event);"
+		      oncommand="FlatBookmarks.onButtonCommand(event);">
+			<hbox id="flatbm-toolbar" align="center">
+				<toolbarbutton id="editBMPanel_toolbarFolderItem" />
+				<toolbarbutton id="editBMPanel_bmRootItem" />
+				<toolbarbutton id="editBMPanel_unfiledRootItem" />
+				<spacer flex="1" />
+				<toolbarbutton id="flatbm-back" class="plain" command="flatbmCmd:back" />
+				<toolbarbutton id="flatbm-goup" class="plain" command="flatbmCmd:goUp" />
+			</hbox>
+			<vbox id="flatbm-folders"
+			      onclick="FlatBookmarks.onPopupClick(event);"
+			      onpopupshowing="FlatBookmarks.generatePopup(event);"
+			      onpopuphiding="FlatBookmarks.destroyPopup(event);" />
+		</vbox>
+
+	</page>
+
+</overlay>

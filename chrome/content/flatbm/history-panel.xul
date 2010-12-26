@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet href="chrome://browser/skin/browser.css"?>
+<?xml-stylesheet href="chrome://browser/skin/places/organizer.css"?>
+<?xml-stylesheet href="chrome://flatbm/skin/bookmarksPanel.css"?>
+<?xml-stylesheet href="chrome://flatbm/content/bindings.css"?>
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<script type="application/x-javascript" src="chrome://flatbm/content/history-panel.js" />
+
+	<page id="history-panel">
+
+		<commandset id="flatbm-commandset">
+			<command id="flatbmCmd:goUp" oncommand="FlatHistory.goUp();" />
+			<command id="flatbmCmd:back" oncommand="FlatHistory.back();" />
+		</commandset>
+
+		<keyset id="flatbm-keyset">
+			<key id="flatbmKey_goUp" keycode="VK_UP"   modifiers="alt" command="flatbmCmd:goUp" />
+			<key id="flatbmKey_back" keycode="VK_LEFT" modifiers="alt" command="flatbmCmd:back" />
+		</keyset>
+
+		<vbox id="flatbm-outer" insertbefore="historyTree">
+			<hbox id="flatbm-toolbar" align="center">
+				<toolbarbutton id="flatbm-history-button" oncommand="searchHistory('');" />
+				<toolbarbutton id="viewMenu" type="menu" selectedsort="day" persist="selectedsort"
+				               oncommand="FlatHistory.onGroupingChange();" />
+				<spacer flex="1" />
+				<toolbarbutton id="flatbm-back" class="plain" command="flatbmCmd:back" />
+				<toolbarbutton id="flatbm-goup" class="plain" command="flatbmCmd:goUp" />
+			</hbox>
+			<vbox id="flatbm-folders"
+			      oncommand="FlatHistory.onButtonCommand(event);"
+			      onpopupshowing="FlatHistory.generatePopup(event);"
+			      onpopuphiding="FlatHistory.destroyPopup(event);">
+				<folderitem id="flatbm-group-day"  query="true" dayContainer="true">
+					<menupopup position="end_before" />
+				</folderitem>
+				<folderitem id="flatbm-group-site" query="true" hostContainer="true">
+					<menupopup position="end_before" />
+				</folderitem>
+			</vbox>
+		</vbox>
+
+		<tree id="historyTree" flatList="true"
+		      onopenflatcontainer="FlatHistory.onOpenFlatContainer(aContainer);"
+		      ondblclick="FlatHistory.onDblClick(event);" />
+
+	</page>
+
+</overlay>

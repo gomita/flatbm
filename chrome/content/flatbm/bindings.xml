@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<bindings id="flatbmBindings"
+          xmlns="http://www.mozilla.org/xbl"
+          xmlns:xbl="http://www.mozilla.org/xbl"
+          xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<binding id="flatbm-folders" display="xul:menubar"
+	         extends="chrome://global/content/bindings/general.xml#basecontrol" />
+
+	<binding id="folderitem">
+		<content>
+			<xul:toolbarbutton class="bookmark-item plain" container="true" flex="1"
+			 xbl:inherits="label,image,id=buttonId,livemark,query,tagContainer,dayContainer,hostContainer" />
+			<xul:toolbarbutton class="expander" type="menu">
+				<children includes="menupopup" />
+			</xul:toolbarbutton>
+		</content>
+	</binding>
+
+</bindings>

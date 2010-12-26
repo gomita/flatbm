@@ -1,0 +1,8 @@
+#flatbm-folders {
+	-moz-binding: url("chrome://flatbm/content/bindings.xml#flatbm-folders");
+}
+
+folderitem {
+	-moz-binding: url("chrome://flatbm/content/bindings.xml#folderitem");
+}
+

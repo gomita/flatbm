@@ -1,0 +1,16 @@
+#buttonSet_back .checkbox-icon {
+	list-style-image: url("chrome://flatbm/skin/back.png");
+	-moz-image-region: rect(0px, 14px, 14px, 0px);
+}
+
+#buttonSet_goup .checkbox-icon {
+	list-style-image: url("chrome://flatbm/skin/goup.png");
+	-moz-image-region: rect(0px, 14px, 14px, 0px);
+}
+
+#buttonSet_back .checkbox-icon,
+#buttonSet_goup .checkbox-icon {
+	max-width: 14px;
+	max-height: 14px;
+}
+

@@ -1,0 +1,8 @@
+<!ENTITY prefs.title "Опције">
+<!ENTITY prefs.buttonSet.back "Прикажи дугме „назад”">
+<!ENTITY prefs.buttonSet.goup "Прикажи дугме „Пређи на ниво изнад”">
+<!ENTITY prefs.expandSubFolders "Прошири подфасцикле у списку родитељских фасцикли">
+<!ENTITY prefs.clickOpensFolder "Фасцикле отварај једним кликом">
+<!ENTITY prefs.showInSidebarMenu "Додај мени „Прикажи у бочној траци” у приручни мени фасцикле">
+<!ENTITY prefs.showInOrganizerMenu "Додај „Организуј забелешке...” у приручни мени фасцикле">
+<!ENTITY prefs.restart "Потребно је поновно покренути Фајерфокс да би измене биле примењене.">

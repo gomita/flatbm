@@ -1,0 +1,8 @@
+<!ENTITY prefs.title "Opciones">
+<!ENTITY prefs.buttonSet.back "Mostrar botón Atrás">
+<!ENTITY prefs.buttonSet.goup "Mostrar botón Subir">
+<!ENTITY prefs.expandSubFolders "Expandir subcarpeta en la lista de carpetas">
+<!ENTITY prefs.clickOpensFolder "Abrir carpeta con una pulsación">
+<!ENTITY prefs.showInSidebarMenu "Añadir 'Mostrar en barra lateral' al menú contextual en la carpeta">
+<!ENTITY prefs.showInOrganizerMenu "Añadir 'Organizar Marcadores...' al menú contextual en la carpeta">
+<!ENTITY prefs.restart "Los cambios requieren reiniciar Firefox.">

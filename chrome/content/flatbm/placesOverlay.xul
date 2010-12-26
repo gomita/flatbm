@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://flatbm/locale/placesOverlay.dtd">
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+	<script type="application/x-javascript" src="chrome://flatbm/content/placesOverlay.js" />
+
+	<commandset id="placesCommands">
+		<command id="flatbmCmd_showInSidebar" oncommand="FlatBookmarksOverlay.showInSidebar();" />
+		<command id="flatbmCmd_showInOrganizer" oncommand="FlatBookmarksOverlay.showInOrganizer();" />
+	</commandset>
+
+	<popup id="placesContext">
+		<menuitem id="flatbmContext_showInSidebar"
+		          command="flatbmCmd_showInSidebar"
+		          label="&flatbm.showInSidebar.label;"
+		          accesskey="&flatbm.showInSidebar.accesskey;"
+		          insertbefore="placesContext_openSeparator"
+		          selectiontype="single"
+		          selection="folder|query"
+		          hideifnoinsertionpoint="true"
+		          forcehideselection="host|day|dynamiccontainer" />
+		<menuitem id="flatbmContext_showInOrganizer"
+		          command="flatbmCmd_showInOrganizer"
+		          label="&flatbm.showInOrganizer.label;"
+		          accesskey="&flatbm.showInOrganizer.accesskey;"
+		          insertbefore="placesContext_openSeparator"
+		          selectiontype="single"
+		          selection="folder|query"
+		          hideifnoinsertionpoint="true"
+		          forcehideselection="host|day|dynamiccontainer" />
+	</popup>
+
+</overlay>

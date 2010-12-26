@@ -1,0 +1,9 @@
+pref("extensions.flatbm.buttonSet", 1);
+pref("extensions.flatbm.expandSubFolders", false);
+pref("extensions.flatbm.clickOpensFolder", true);
+pref("extensions.flatbm.showInSidebarMenu", true);
+pref("extensions.flatbm.showInOrganizerMenu", true);
+pref("extensions.flatbm.place", "");
+pref("extensions.flatbm.place.history", "");
+pref("extensions.flatbm.queryTitle", "");
+pref("extensions.flatbm.queryItemId", 0);

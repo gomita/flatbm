@@ -1,0 +1,5 @@
+<!ENTITY flatbm.showInSidebar.label "Megjelenítés az oldalsávban">
+<!ENTITY flatbm.showInSidebar.accesskey "o">
+<!-- LOCALIZATION NOTE : This should be same as organizeBookmarks.label in browser.dtd -->
+<!ENTITY flatbm.showInOrganizer.label "Könyvjelzők kezelése...">
+<!ENTITY flatbm.showInOrganizer.accesskey "j">

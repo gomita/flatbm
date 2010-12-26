@@ -1,0 +1,8 @@
+<!ENTITY prefs.title "Opzioni">
+<!ENTITY prefs.buttonSet.back "Mostra il pulsante &apos;Indietro&apos;">
+<!ENTITY prefs.buttonSet.goup "Mostra il pulsante &apos;Vai su&apos;">
+<!ENTITY prefs.expandSubFolders "Espandi le sottocartelle nella lista delle cartelle superiori">
+<!ENTITY prefs.clickOpensFolder "Apri le cartelle con un solo clic">
+<!ENTITY prefs.showInSidebarMenu "Aggiungi la voce &apos;Mostra nella barra laterale&apos; al menu contestuale delle cartelle">
+<!ENTITY prefs.showInOrganizerMenu "Aggiungi la voce &apos;Organizza i segnalibri…&apos; al menu contestuale delle cartelle">
+<!ENTITY prefs.restart "Riavviare il browser per rendere effettive le modifiche">

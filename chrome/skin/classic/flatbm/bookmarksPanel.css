@@ -1,0 +1,105 @@
+/* ::::: folders ::::: */
+
+#flatbm-folders {
+	border-top: 1px solid ThreeDLightShadow;
+}
+
+folderitem {
+	border-top: 1px solid ThreeDHighlight;
+	border-bottom: 1px solid ThreeDLightShadow;
+}
+
+folderitem toolbarbutton.bookmark-item {
+	-moz-appearance: none;
+	max-width: none !important;
+}
+
+folderitem toolbarbutton.bookmark-item .toolbarbutton-text {
+	text-align: start !important;
+}
+
+folderitem[open="true"] {
+	background-color: Highlight;
+}
+
+folderitem[open="true"] toolbarbutton.bookmark-item {
+	color: HighlightText;
+}
+
+folderitem toolbarbutton.expander {
+	-moz-appearance: menuarrow;
+	list-style-image: none !important;
+	/* [Linux] fix too narrow expander */
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+folderitem toolbarbutton.expander dropmarker {
+	display: none;
+}
+
+/* ::::: tree ::::: */
+
+tree[type="places"] {
+	/* make it white on Windows Vista/7 */
+	background-color: -moz-field !important;
+}
+
+tree[type="places"] treechildren::-moz-tree-twisty {
+	-moz-appearance: none !important;
+	padding-right: 0px !important;
+	padding-top  : 0px !important;
+	width: 0px !important;
+	list-style-image: none !important;
+}
+
+/* ::::: goup button ::::: */
+
+#flatbm-goup {
+	list-style-image: url("chrome://flatbm/skin/goup.png");
+	-moz-image-region: rect(0px, 14px, 14px, 0px);
+	-moz-appearance: none;
+}
+
+#flatbm-goup:hover, #flatbm-goup[open="true"] {
+	-moz-image-region: rect(0px, 28px, 14px, 14px);
+}
+
+#flatbm-goup:hover:active {
+	-moz-image-region: rect(0px, 42px, 14px, 28px);
+}
+
+#flatbm-goup[disabled],
+#flatbm-goup[disabled]:hover,
+#flatbm-goup[disabled]:hover:active {
+	-moz-image-region: rect(0px, 56px, 14px, 42px);
+}
+
+/* ::::: back button ::::: */
+
+#flatbm-back {
+	list-style-image: url("chrome://flatbm/skin/back.png");
+	-moz-image-region: rect(0px, 14px, 14px, 0px);
+	-moz-appearance: none;
+}
+
+#flatbm-back:hover, #flatbm-back[open="true"] {
+	-moz-image-region: rect(0px, 28px, 14px, 14px);
+}
+
+#flatbm-back:hover:active {
+	-moz-image-region: rect(0px, 42px, 14px, 28px);
+}
+
+#flatbm-back[disabled],
+#flatbm-back[disabled]:hover,
+#flatbm-back[disabled]:hover:active {
+	-moz-image-region: rect(0px, 56px, 14px, 42px);
+}
+
+/* ::::: History ::::: */
+
+#flatbm-history-button {
+	list-style-image: url("chrome://browser/skin/places/history.png");
+}
+

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+
+	<Description about="urn:mozilla:install-manifest">
+		<em:id>flatbm@xuldev.org</em:id>
+		<em:type>2</em:type>
+		<em:name>Flat Bookmarks + History</em:name>
+		<em:version>1.6.2</em:version>
+		<em:description>Makes the Bookmarks and History Sidebars a flat list view.</em:description>
+		<em:creator>Gomita</em:creator>
+		<em:localized>
+			<Description>
+				<em:locale>ja</em:locale>
+				<em:name>Flat Bookmarks + History</em:name>
+				<em:description>ブックマークと履歴のサイドバーをフラットなリスト表示にします。</em:description>
+				<em:creator>ごみた</em:creator>
+				<em:homepageURL>http://www.xuldev.org/flatbm/</em:homepageURL>
+			</Description>
+		</em:localized>
+		<em:translator>edgard.magalhaes (pt-BR)</em:translator>
+		<em:translator>MatrixIsAllOver (it)</em:translator>
+		<em:translator>nregen (de)</em:translator>
+		<em:translator>RigoNet (es-ES)</em:translator>
+		<em:translator>Goofy (fr)</em:translator>
+		<em:translator>terryweng (zh-TW)</em:translator>
+		<em:translator>DakSrbija (sr)</em:translator>
+		<em:translator>Mikes Kaszmán István (hu-HU)</em:translator>
+		<em:optionsURL>chrome://flatbm/content/options.xul</em:optionsURL>
+		<em:homepageURL>http://www.xuldev.org/flatbm/</em:homepageURL>
+		<em:targetApplication>
+			<Description>
+				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+				<em:minVersion>3.6</em:minVersion>
+				<em:maxVersion>4.0b9pre</em:maxVersion>
+			</Description>
+		</em:targetApplication>
+	</Description>
+
+</RDF>
