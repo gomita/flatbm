@@ -59,6 +59,7 @@ tree[type="places"] treechildren::-moz-tree-twisty {
 	list-style-image: url("chrome://flatbm/skin/goup.png");
 	-moz-image-region: rect(0px, 14px, 14px, 0px);
 	-moz-appearance: none;
+	margin-right: 4px !important;
 }
 
 #flatbm-goup:hover, #flatbm-goup[open="true"] {
@@ -81,6 +82,7 @@ tree[type="places"] treechildren::-moz-tree-twisty {
 	list-style-image: url("chrome://flatbm/skin/back.png");
 	-moz-image-region: rect(0px, 14px, 14px, 0px);
 	-moz-appearance: none;
+	margin-right: 4px !important;
 }
 
 #flatbm-back:hover, #flatbm-back[open="true"] {
