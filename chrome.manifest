@@ -15,3 +15,7 @@ overlay	chrome://browser/content/places/placesOverlay.xul	chrome://flatbm/conten
 overlay	chrome://browser/content/bookmarks/bookmarksPanel.xul	chrome://flatbm/content/bookmarksPanel.xul
 overlay	chrome://browser/content/history/history-panel.xul	chrome://flatbm/content/history-panel.xul
 
+# [Mac]
+style	chrome://browser/content/bookmarks/bookmarksPanel.xul	chrome://flatbm/skin/bookmarksPanel-mac.css	os=Darwin
+style	chrome://browser/content/history/history-panel.xul	chrome://flatbm/skin/bookmarksPanel-mac.css		os=Darwin
+

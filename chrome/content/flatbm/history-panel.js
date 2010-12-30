@@ -52,6 +52,9 @@ var FlatHistory = {
 		viewMenu.appendChild(viewButton.firstChild);
 		viewMenu.label = viewButton.label;
 		viewButton.hidden = true;
+		// [Mac][Firefox4] list-style-imageが適用されないため「表示」ボタンのアイコンが表示されない問題への対策
+		if (window.getComputedStyle(viewMenu, null).listStyleImage == "none")
+			viewMenu.setAttribute("_noiconic", "true");
 		// 履歴ボタン
 		var rootButton = document.getElementById("flatbm-history-button");
 		rootButton.label = PlacesUIUtils.getString("OrganizerQueryHistory");

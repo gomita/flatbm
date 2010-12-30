@@ -1,0 +1,44 @@
+/* ::::: folders ::::: */
+
+folderitem {
+	border-top: 1px solid rgba(255,255,255,0.5);
+}
+
+folderitem toolbarbutton.bookmark-item {
+	padding: 2px 4px;
+}
+
+folderitem toolbarbutton.expander dropmarker {
+	display: -moz-box;
+}
+
+folderitem toolbarbutton.expander .toolbarbutton-icon,
+folderitem toolbarbutton.expander .toolbarbutton-text {
+	display: none;
+}
+
+folderitem toolbarbutton.bookmark-item[container]:hover,
+folderitem toolbarbutton.bookmark-item[container]:hover > .toolbarbutton-text,
+folderitem toolbarbutton.bookmark-item[container]:hover:active,
+folderitem toolbarbutton.bookmark-item[container]:hover:active > .toolbarbutton-text {
+	background: none !important;
+	box-shadow: none !important;
+}
+
+/* ::::: toolbar :::: */
+
+#flatbm-toolbar toolbarbutton[label] .toolbarbutton-text {
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+#flatbm-toolbar toolbarbutton:not([label]) .toolbarbutton-text {
+	display: none;
+}
+
+/* ::::: History ::::: */
+
+#viewMenu[_noiconic="true"] .toolbarbutton-icon {
+	display: none;
+}
+
