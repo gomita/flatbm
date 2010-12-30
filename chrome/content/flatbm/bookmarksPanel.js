@@ -103,10 +103,18 @@ var FlatBookmarks = {
 		this._updateCommands();
 	},
 
+	get fx4() {
+		var appInfo = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULAppInfo);
+		delete this.fx4;
+		return this.fx4 = parseFloat(appInfo.version) >= 4.0;
+	},
+
 	_dragOverTime: null,	// dragenter の開始時刻
 	_dragOverItem: null,	// dragenter されたフォルダのアイテムID
 
 	handleDropEvents: function(event) {
+		if (event.target.localName != "folderitem" && event.target.localName != "toolbarbutton")
+			return;
 		// 検索フォルダ・ライブマークフォルダ上でのドラッグ＆ドロップ操作を不許可
 		if (event.target.hasAttribute("query") || event.target.hasAttribute("livemark"))
 			return;
@@ -133,8 +141,10 @@ var FlatBookmarks = {
 				}
 				break;
 			case "dragleave": 
-				this._dragOverTime = null;
-				this._dragOverItem = null;
+				if (!this.fx4) {
+					this._dragOverTime = null;
+					this._dragOverItem = null;
+				}
 				event.target.removeAttribute("open");
 				break;
 			case "drop": 
