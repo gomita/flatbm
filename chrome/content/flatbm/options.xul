@@ -7,7 +7,7 @@
 
 <prefwindow id="flatbmPrefs"
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-            title="Flat Bookmarks + History - &prefs.title;"
+            title="Flat Bookmarks - &prefs.title;"
             onunload="PrefsUI.done();">
 
 	<prefpane id="paneMain" flex="1">

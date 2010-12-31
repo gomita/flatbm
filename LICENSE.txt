@@ -11,7 +11,7 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * The Original Code is Flat Bookmarks + History.
+ * The Original Code is Flat Bookmarks.
  *
  * The Initial Developer of the Original Code is Gomita.
  * Portions created by the Initial Developer are Copyright (C) 2010
