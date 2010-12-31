@@ -1,5 +1,8 @@
+// This file is included in:
+//  * Bookmarks Sidebar
 var FlatBookmarks = {
 
+	// xul:tree
 	get tree() {
 		return document.getElementById("bookmarks-view");
 	},
@@ -8,21 +11,20 @@ var FlatBookmarks = {
 		return "place:queryType=1&folder=" + aFolderId + "&expandQueries=false";
 	},
 
-	_prefBranch: null,
+	// nsIPrefBranch
+	_branch: null,
 
 	_inSearchMode: false,
 
 	_backHistory: [],
 
 	init: function() {
-		// 従来のツリーが一瞬だけ表示される問題への対策 (1)
+		// this fixes the problem that the old style tree appears in an eye's blink (1)
 		document.documentElement.collapsed = true;
-		// 設定値
-		this._prefBranch = Cc["@mozilla.org/preferences-service;1"].
-		                   getService(Ci.nsIPrefService).
-		                   getBranch("extensions.flatbm.");
-		if (!this._prefBranch.getBoolPref("clickOpensFolder")) {
-			// シングルクリックでフォルダを開く操作を無効化
+		this._branch = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefService).
+		               getBranch("extensions.flatbm.");
+		if (!this._branch.getBoolPref("clickOpensFolder")) {
+			// disable opening folder with single click
 			window.eval(
 				"SidebarUtils.handleTreeClick = " + 
 				SidebarUtils.handleTreeClick.toSource().replace(
@@ -30,57 +32,56 @@ var FlatBookmarks = {
 				)
 			);
 		}
-		// 検索文字列が入力されている場合はツールバーを非表示にする
+		// hook input in search bar and show or hide Flat Bookmarks toolbar
 		window.eval(
 			searchBookmarks.toSource().replace(
 				"}}", 
 				"} FlatBookmarks.onSearchBookmarks(aSearchString); }"
 			)
 		);
-		// 検索ボックス
-		// [Firefox3.5] ラベルのidが未設定のためpreviousSiblingで取得
-		// 「textbox.emptyText = ...」だとサイドバーを開いた直後に一瞬ツリー表示が不正になる
+		// init search bar
 		var textbox = document.getElementById("search-box");
-		var label = document.getElementById("sidebar-search-label") || textbox.previousSibling;
+		var label = document.getElementById("sidebar-search-label");
 		textbox.setAttribute("emptytext",   label.value.replace(/:$/, ""));	// [Firefox3.6]
-		textbox.setAttribute("placeholder", label.value.replace(/:$/, ""));	// [Firefox3.7]
+		textbox.setAttribute("placeholder", label.value.replace(/:$/, ""));	// [Firefox4]
 		textbox.setAttribute("accesskey", label.getAttribute("accesskey"));
 		label.hidden = true;
-		// [Firefox3.6] サイドバーオープン状態でFirefox起動時にemptytextが表示されない問題への対策
+		// [Firefox3.6] this fixes the following bug: when Firefox is starting up 
+		// with opening Bookmarks Sidebar, the place holder text does not appear
 		textbox.focus();
-		// ルートフォルダのitemId
+		// set itemId of root folders
 		var setElementItemId = function(aEltId, aItemId) {
 			document.getElementById(aEltId).setAttribute("itemId", aItemId);
 		};
 		setElementItemId("editBMPanel_toolbarFolderItem", PlacesUtils.toolbarFolderId);
 		setElementItemId("editBMPanel_bmRootItem",        PlacesUtils.bookmarksMenuFolderId);
 		setElementItemId("editBMPanel_unfiledRootItem",   PlacesUtils.unfiledBookmarksFolderId);
-		// ツールバーボタン
-		var buttonSet = this._prefBranch.getIntPref("buttonSet");
+		// init go-up and back buttons
+		var buttonSet = this._branch.getIntPref("buttonSet");
 		document.getElementById("flatbm-goup").hidden = !(buttonSet & 1);
 		document.getElementById("flatbm-back").hidden = !(buttonSet & 2);
-		if (!this._prefBranch.getBoolPref("expandSubFolders"))
+		if (!this._branch.getBoolPref("expandSubFolders"))
 			document.getElementById("flatbm-folders").removeAttribute("onclick");
-		// ツリー
+		// init tree
 		var tree = this.tree;
 		tree.setAttribute("flatList", "true");
 		tree.setAttribute("onopenflatcontainer", "FlatBookmarks.onOpenFlatContainer(aContainer);");
 		tree.setAttribute("ondblclick", "FlatBookmarks.onDblClick(event);");
 		this._setTreePlace(
-			window.top.FlatBookmarksOverlay.place || 
-			this._prefBranch.getCharPref("place") || 
+			this._branch.getCharPref("place") || 
 			this._makePlaceForFolder(PlacesUtils.bookmarksMenuFolderId)
 		);
-		window.top.FlatBookmarksOverlay.place = null;
-		// 従来のツリーが一瞬だけ表示される問題への対策 (2)
+		// this fixes the problem that the old style tree appears in an eye's blink (2)
 		document.documentElement.collapsed = false;
 	},
 
 	onOpenFlatContainer: function(aContainer) {
-		// 右クリックメニューを開く際に一瞬フォルダが開閉するバグへの対策
+		// this fixes the problem (???) : 
+		// when showing context menu, folder open and close in an eye's blink
 		if (document.getElementById("placesContext").state == "open")
 			return;
-		// ダブルクリックでフォルダ遷移直後にクリックイベントが発生するバグへの対策
+		// this fixes the problem: 
+		// click event will occur just after changing the current folder with double-click
 		setTimeout(function(self) { self.goDown(aContainer); }, 0, this);
 	},
 
@@ -90,10 +91,10 @@ var FlatBookmarks = {
 		var row = {};
 		this.tree.treeBoxObject.getCellAt(aEvent.clientX, aEvent.clientY, row, {}, {});
 		if (row.value == -1) {
-			// ツリーの余白をダブルクリック
-			var command = document.getElementById("flatbmCmd:goUp");
-			if (!command.hasAttribute("disabled"))
-				command.doCommand();
+			// when double-clicking on a blank space of tree...
+			var cmd = document.getElementById("flatbmCmd:goUp");
+			if (!cmd.hasAttribute("disabled"))
+				cmd.doCommand();
 		}
 	},
 
@@ -109,19 +110,19 @@ var FlatBookmarks = {
 		return this.fx4 = parseFloat(appInfo.version) >= 4.0;
 	},
 
-	_dragOverTime: null,	// dragenter の開始時刻
-	_dragOverItem: null,	// dragenter されたフォルダのアイテムID
+	_dragOverTime: null,	// time to start drag-over operation
+	_dragOverItem: null,	// itemId of target folder for drag-over operation
 
 	handleDropEvents: function(event) {
 		if (event.target.localName != "folderitem" && event.target.localName != "toolbarbutton")
 			return;
-		// 検索フォルダ・ライブマークフォルダ上でのドラッグ＆ドロップ操作を不許可
+		// disallow drag-over operation onto search folders and livemark folders
 		if (event.target.hasAttribute("query") || event.target.hasAttribute("livemark"))
 			return;
-		// 以下のデータ形式のみドラッグ＆ドロップ操作を許可
-		// ・ブックマーク: text/x-moz-place
-		// ・ブラウザタブ: application/x-moz-tabbrowser-tab
-		// ・リンク      : text/x-moz-url
+		// allow drag opeartions only for the following data: 
+		// * normal bookmark (text/x-moz-place)
+		// * browser tab (application/x-moz-tabbrowser-tab)
+		// * hyper lin (text/x-moz-url)
 		if (!event.dataTransfer.types.contains(PlacesUtils.TYPE_X_MOZ_PLACE) && 
 		    !event.dataTransfer.types.contains(PlacesUtils.TYPE_X_MOZ_URL) && 
 		    !event.dataTransfer.types.contains(TAB_DROP_TYPE))
@@ -135,12 +136,15 @@ var FlatBookmarks = {
 				break;
 			case "dragover": 
 				if (Date.now() - this._dragOverTime > 1000) {
+					// when dragging-over a folder for one second...
 					this._dragOverTime = Date.now();
 					if (!event.target.disabled)
 						event.target.doCommand();
 				}
 				break;
 			case "dragleave": 
+				// [Firefox4] this fixes the problem: current folder will be changed 
+				// just after starting drag-over operation due to odd events sequence
 				if (!this.fx4) {
 					this._dragOverTime = null;
 					this._dragOverItem = null;
@@ -154,11 +158,11 @@ var FlatBookmarks = {
 				var itemId = event.target.getAttribute("itemId");
 				if (!itemId)
 					return;
-				// [Firefox3.6] PlacesControllerDragHelper.onDrop(insertionPoint)
-				// [Firefox3.7] PlacesControllerDragHelper.onDrop(insertionPoint, dt)
 				PlacesControllerDragHelper.currentDataTransfer = event.dataTransfer;
 				PlacesControllerDragHelper.currentDropTarget = event.target;
 				var ip = new InsertionPoint(itemId, -1, Ci.nsITreeView.DROP_ON, false);
+				// [Firefox4] PlacesControllerDragHelper.onDrop accepts the second argument 
+				// as dataTransfer object (and does not accept in Firefox3.6)
 				PlacesControllerDragHelper.onDrop(ip, event.dataTransfer);
 				break;
 			default: 
@@ -166,11 +170,11 @@ var FlatBookmarks = {
 	},
 
 	generatePopup: function(event) {
-		var expand = this._prefBranch.getBoolPref("expandSubFolders");
+		var expand = this._branch.getBoolPref("expandSubFolders");
 		var popup = event.target;
 		var itemId = event.target.parentNode.getAttribute("itemId");
-/*debug*/if (!itemId) alert("Assertion failed!");
-		// 一階層下のフォルダのitemIdがあれば取得
+		if (!itemId) alert("Assertion failed!");	// #debug
+		// get the direct child folder's itemId for later use
 		var childItemId = popup.parentNode.nextSibling ? 
 		                  popup.parentNode.nextSibling.getAttribute("itemId") : null;
 		var root = PlacesUtils.getFolderContents(itemId).root;
@@ -186,14 +190,17 @@ var FlatBookmarks = {
 			elt.setAttribute("label", node.title);
 			elt.setAttribute("itemId", node.itemId);
 			if (node.itemId == childItemId)
-				elt.setAttribute("default", "true");
+				// if folder is one of the parent chain of the current folder, make the text bold
+				// NOTE: |default| attribute is applied only to |menuitem| elements
+				eltName == "menu" ? elt.style.fontWeight = "bold" : 
+				                    elt.setAttribute("default", "true");
 			if (expand)
 				elt.appendChild(document.createElement("menupopup"));
 			popup.appendChild(elt);
 			empty = false;
 		}
 		if (empty) {
-			// 「(なし)」の項目を表示
+			// show dummy item
 			var elt = document.createElement("menuitem");
 			elt.setAttribute("label", PlacesUIUtils.getString("bookmarksMenuEmptyFolder"));
 			elt.setAttribute("disabled", "true");
@@ -221,11 +228,11 @@ var FlatBookmarks = {
 	},
 
 	onButtonCommand: function(event) {
-		// XXX place:URIが不明なため、検索フォルダへの遷移を許可しない
+		// do nothing when clicking on a tag folder since cannot get appropriate place: URI for it
 		if (event.target.getAttribute("query"))
 			return;
 		var itemId = event.target.getAttribute("itemId");
-/*debug*/if (!itemId) alert("Assertion failed!\nno itemId at " + event.target.id);
+		if (!itemId) alert("Assertion failed!\nno itemId at " + event.target.id);	// #debug
 		if (!itemId)
 			return;
 		this._setTreePlace(this._makePlaceForFolder(itemId));
@@ -233,27 +240,28 @@ var FlatBookmarks = {
 
 	goDown: function(aNode) {
 		if (this._inSearchMode) {
-			// 検索モードON中に右クリックメニューからgoDown呼び出し→検索モードOFF
-/*debug*/	alert("escape from search mode");
+			// if goDown is called during search mode, force exiting search mode
+			// (assuming that being called from 'Show in Sidebar' menu)
+			alert("force exiting search mode");	// #debug
 			var searchBox = document.getElementById("search-box");
 			searchBox.value = "";
 			searchBox.doCommand();
 		}
-		// 検索フォルダへの遷移時、検索フォルダのitemIdを設定値として保存する
-		// タグフォルダへの遷移時、タグフォルダのタイトルを設定値として保存する
-		// 設定値として保存した値は、直後の親フォルダリスト生成時に使用する
-		// XXX ただし、「最近付けたタグ」からタグフォルダへの遷移時はあえてitemIdの保存を行わない
+		// when moving into a search folder, save its itemId as pref
+		// when moving into a tag folder, save its title as pref
+		// saved values will be used in the forthcoming _setTreePlace
+		// EXCEPTION: when moving from 'Recent Tags' to a tag folder, does not save daringly
 		if (PlacesUtils.nodeIsQuery(aNode) && !PlacesUtils.nodeIsQuery(aNode.parent))
-			this._prefBranch.setIntPref("queryItemId", aNode.itemId);
+			this._branch.setIntPref("queryItemId", aNode.itemId);
 		if (PlacesUtils.nodeIsTagQuery(aNode))
-			this._setStringPref("queryTitle", aNode.title);
+			this._setUnicharPref("queryTitle", aNode.title);
 		this._setTreePlace(aNode.uri);
 	},
 
 	goUp: function() {
 		var node = this.tree.view.result.root;
 		var isQuery = PlacesUtils.nodeIsQuery(node);
-		var itemId = isQuery ? this._prefBranch.getIntPref("queryItemId") : node.itemId;
+		var itemId = isQuery ? this._branch.getIntPref("queryItemId") : node.itemId;
 		itemId = PlacesUtils.bookmarks.getFolderIdForItem(itemId);
 		this._setTreePlace(this._makePlaceForFolder(itemId));
 	},
@@ -261,46 +269,41 @@ var FlatBookmarks = {
 	back: function() {
 		if (this._backHistory.length < 2)
 			return;
-/*debug*/Application.console.log(this._backHistory.join("\n"));
 		this._backHistory.pop();
 		var [itemId, place] = this._backHistory.pop();
-		// 検索フォルダの場合を考慮
-		this._prefBranch.setIntPref("queryItemId", itemId);
+		// considering back to a search folder
+		this._branch.setIntPref("queryItemId", itemId);
 		this._setTreePlace(place);
 	},
 
-	/**
-	 * @caller init, onButtonCommand, goDown, goUp
-	 */
+	// this will be called from: init, onButtonCommand, goDown, goUp
 	_setTreePlace: function(aPlace) {
 		if (/folder=(\d+)/.test(aPlace)) {
 			var itemId = RegExp.$1;
 			try {
-				// itemIdが存在するかのチェック
+				// check itemId exists
 				PlacesUtils.bookmarks.getItemTitle(itemId);
 			}
 			catch (ex) {
-				// 存在しないフォルダを表示しようとした場合 NS_ERROR_ILLEGAL_VALUE
-/*debug*/		alert("folder does not exist: " + itemId + "\n" + aPlace);
+				// NS_ERROR_ILLEGAL_VALUE is thrown since itemId does not exist
+				alert("folder does not exist: " + itemId + "\n" + aPlace);	// #debug
 				aPlace = this._makePlaceForFolder(PlacesUtils.bookmarksMenuFolderId);
 			}
 		}
 		var tree = this.tree;
 		tree.place = aPlace;
-		// ツリーの選択を解除
 		tree.view.selection.clearSelection();
-		// フォルダリスト生成
+		// generate parent folders list
 		var folders = document.getElementById("flatbm-folders");
 		while (folders.hasChildNodes())
 			folders.removeChild(folders.lastChild);
-		// itemIdを取得
 		var node = tree.view.result.root;
 		var isQuery = PlacesUtils.nodeIsQuery(node);
 		var isTagQuery = PlacesUtils.nodeIsTagQuery(node);
-		var itemId = isQuery ? this._prefBranch.getIntPref("queryItemId") : node.itemId;
-		// 履歴への追加処理で参照するために現時点のitemIdを保持
+		var itemId = isQuery ? this._branch.getIntPref("queryItemId") : node.itemId;
+		// keep the itemId of current folder before changing it for later use
 		var rootItemId = itemId;
-		// ルートフォルダを表示させない場合: while (!PlacesUtils.isRootItem(itemId)) {
+		// if using |PlacesUtils.isRootItem(itemId)| instead, we can stop showing root folders
 		while (itemId && itemId != PlacesUtils.placesRootId) {
 			var folder = document.createElement("folderitem");
 			var id;
@@ -310,16 +313,13 @@ var FlatBookmarks = {
 				case PlacesUtils.unfiledBookmarksFolderId: id = "editBMPanel_unfiledRootItem"; break;
 				default: 
 			}
+			// |buttonId| attribute is inherited to |id| of xul:toolbarbutton to show 
+			// appropriate root folder icon @see bindings.xml
 			if (id)
-				// ルートフォルダのみbuttonId属性をセットし、XBLで匿名toolbarbutton要素のidへと継承して、
-				// ルートフォルダ用の適切なアイコンを表示させる。
 				folder.setAttribute("buttonId", id);
 			folder.setAttribute("label", PlacesUtils.bookmarks.getItemTitle(itemId));
 			folder.setAttribute("itemId", itemId);
-			// [Firefox3.5] use nsILivemarkService instead of PlacesUtils.itemIsLivemark
-			var isLivemark = PlacesUtils.itemIsLivemark ? PlacesUtils.itemIsLivemark(itemId) : 
-			                 PlacesUtils.livemarks.isLivemark(itemId);
-			if (isLivemark)
+			if (PlacesUtils.itemIsLivemark(itemId))
 				folder.setAttribute("livemark", "true");
 			if (isQuery) {
 				folder.setAttribute("query", "true");
@@ -327,35 +327,30 @@ var FlatBookmarks = {
 			}
 			if (isTagQuery) {
 				folder.setAttribute("tagContainer", "true");
-				folder.setAttribute("label", this._getStringPref("queryTitle"));
+				folder.setAttribute("label", this._getUnicharPref("queryTitle"));
 				isTagQuery = false;
 			}
 			var popup = document.createElement("menupopup");
 			popup.setAttribute("position", "end_before");
 			folder.appendChild(popup);
 			folders.insertBefore(folder, folders.firstChild);
-			// 親フォルダへ
+			// go to the parent folder
 			itemId = PlacesUtils.bookmarks.getFolderIdForItem(itemId);
 		}
-		// 履歴の保持
+		// remember the last itemId of folder
 		var lastItemId = this._backHistory.length > 0 ? 
 		                 this._backHistory[this._backHistory.length - 1][0] : null;
 		if (lastItemId != rootItemId)
 			this._backHistory.push([rootItemId, aPlace]);
-		// コマンドの有効化/無効化
 		this._updateCommands();
-		// 状態の記憶
-		this._prefBranch.setCharPref("place", aPlace);
-/*debug*/// Application.console.log(new Date().toLocaleTimeString() + " " + aPlace);
+		this._branch.setCharPref("place", aPlace);
 	},
 
-	/**
-	 * @caller onSearchBookmarks, _setTreePlace
-	 */
+	// this will be called from: onSearchBookmarks, _setTreePlace
 	_updateCommands: function() {
-		// 検索モードOFFでなおかつルートフォルダでなければgoUp可能
+		// enable go-up button if not in search mode and not showing root folder
 		var canGoUp = !this._inSearchMode && !PlacesUtils.isRootItem(this.tree.view.result.root.itemId);
-		// 検索モードOFFでなおかつ前のフォルダの履歴があればback可能
+		// enable back button if not in search mode and having back history
 		var canBack = !this._inSearchMode && this._backHistory.length >= 2;
 		var setElementDisabled = function(aEltId, aDisabled) {
 			var elt = document.getElementById(aEltId);
@@ -368,14 +363,14 @@ var FlatBookmarks = {
 		setElementDisabled("flatbmCmd:back", !canBack);
 	},
 
-	_setStringPref: function(aPrefName, aValue) {
+	_setUnicharPref: function(aName, aValue) {
 		var str = Cc["@mozilla.org/supports-string;1"].createInstance(Ci.nsISupportsString);
 		str.data = aValue;
-		this._prefBranch.setComplexValue(aPrefName, Ci.nsISupportsString, str);
+		this._branch.setComplexValue(aName, Ci.nsISupportsString, str);
 	},
 
-	_getStringPref: function(aPrefName) {
-		var str = this._prefBranch.getComplexValue(aPrefName, Ci.nsISupportsString);
+	_getUnicharPref: function(aName) {
+		var str = this._branch.getComplexValue(aName, Ci.nsISupportsString);
 		return str.data;
 	},
 

@@ -1,9 +1,14 @@
+// This file is included in:
+//  * Browser Window
+//  * Bookmarks Sidebar
+//  * History Sidebar
+//  * Library
 var FlatBookmarksOverlay = {
 
 	get fx4() {
 		var appInfo = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULAppInfo);
 		delete this.fx4;
-		return this.fx4 = parseFloat(appInfo.version) >= 4;
+		return this.fx4 = parseFloat(appInfo.version) >= 4.0;
 	},
 
 	get mac() {
@@ -11,23 +16,28 @@ var FlatBookmarksOverlay = {
 		return this.mac = navigator.platform.indexOf("Mac") == 0;
 	},
 
-	place: null,
+	get branch() {
+		return Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefService).
+		       getBranch("extensions.flatbm.");
+	},
 
 	// cached prefs
 	_showInSidebarMenu: false,
 	_showInOrganizerMenu: false,
 
 	init: function() {
-		this._showInSidebarMenu   = Application.prefs.get("extensions.flatbm.showInSidebarMenu").value;
-		this._showInOrganizerMenu = Application.prefs.get("extensions.flatbm.showInOrganizerMenu").value;
+		var branch = this.branch;
+		this._showInSidebarMenu   = branch.getBoolPref("showInSidebarMenu");
+		this._showInOrganizerMenu = branch.getBoolPref("showInOrganizerMenu");
 		if (!this._showInSidebarMenu) {
-			var menu = document.getElementById("flatbmContext_showInSidebar");
-			menu.parentNode.removeChild(menu);
+			var elt = document.getElementById("flatbmContext_showInSidebar");
+			elt.parentNode.removeChild(elt);
 		}
 		if (!this._showInOrganizerMenu) {
-			var menu = document.getElementById("flatbmContext_showInOrganizer");
-			menu.parentNode.removeChild(menu);
+			var elt = document.getElementById("flatbmContext_showInOrganizer");
+			elt.parentNode.removeChild(elt);
 		}
+		// when opening Browser Window...
 		if ((this._showInSidebarMenu || this._showInOrganizerMenu) && 
 		    window.location.href == "chrome://browser/content/browser.xul") {
 			// XXXhack to add extra menu items to bookmark folders' menu popup
@@ -35,7 +45,7 @@ var FlatBookmarksOverlay = {
 				window.eval(
 					"PlacesViewBase.prototype._onPopupShowing = " + 
 					PlacesViewBase.prototype._onPopupShowing.toSource().replace(
-						/\}\)$/, "FlatBookmarksOverlay.addCommandsItems(popup);})"
+						/\}\)$/, "FlatBookmarksOverlay.addExtraItems(popup);})"
 					)
 				);
 			}
@@ -43,25 +53,25 @@ var FlatBookmarksOverlay = {
 				window.eval(
 					"BookmarksEventHandler.onPopupShowing = " + 
 					BookmarksEventHandler.onPopupShowing.toSource().replace(
-						/\}\)$/, "FlatBookmarksOverlay.addCommandsItems(target);})"
+						/\}\)$/, "FlatBookmarksOverlay.addExtraItems(target);})"
 					)
 				);
 			}
 		}
-		// XXXブックマークの管理ウィンドウを開く際のarguments[1]にitemIdを渡すとそのアイテムを選択する
+		// when opening Library with arguments[1] as itemId, select the given item first
 		if ("PlacesOrganizer" in window && window.arguments && window.arguments[1]) {
 			PlacesOrganizer._places.selectItems([window.arguments[1]], true);
 			PlacesOrganizer._places.focus();
 		}
 	},
 
-	addCommandsItems: function(aPopup) {
+	addExtraItems: function(aPopup) {
 		if (aPopup.lastChild.className != "openintabs-menuitem")
-			// don't add extra menu items if last menu item of popup is not 'Open All in Tabs'
+			// don't add extra items if last menu item of popup is not 'Open All in Tabs'
 			// this also avoids duplication of extra menu items for same popup
 			return;
 		if (PlacesUtils.nodeIsTagQuery(this.fx4 ? aPopup._placesNode : aPopup._resultNode))
-			// don't add extra menu items if popup is of a tag
+			// don't add extra items if popup is of a tag
 			return;
 		if (this._showInSidebarMenu) {
 			var elt = document.createElement("menuitem");
@@ -73,7 +83,7 @@ var FlatBookmarksOverlay = {
 				         : "FlatBookmarksOverlay.showInSidebar(this.parentNode._resultNode);"
 			);
 			aPopup.appendChild(elt);
-			// [Mac] don't show icon of extra menu item
+			// [Mac] don't show icon of extra item
 			if (this.mac)
 				elt.style.listStyleImage = "none";
 		}
@@ -87,7 +97,7 @@ var FlatBookmarksOverlay = {
 				         : "FlatBookmarksOverlay.showInOrganizer(this.parentNode._resultNode);"
 			);
 			aPopup.appendChild(elt);
-			// [Mac] don't show icon of extra menu item
+			// [Mac] don't show icon of extra item
 			if (this.mac)
 				elt.style.listStyleImage = "none";
 		}
@@ -96,26 +106,25 @@ var FlatBookmarksOverlay = {
 	showInSidebar: function(aNode) {
 		if (!aNode)
 			aNode = PlacesUIUtils.getViewForNode(document.popupNode).selectedNode;
-		// 「履歴とブックマークの管理」の左ペーンから「サイドバーで表示」を実行すると、
-		// サイドバーにフォルダしか表示されないバグへの対策。
-		// 「履歴とブックマークの管理」の左ペーンではexcludeItemsをtrueにすることで、
-		// フォルダ以外の項目検索を抑止している。
+		// this fixes the bug: if selecting 'Show in Sidebar' from the left pane of Library,
+		// Bookmarks Sidebar shows folders only without non-folder items
 		if (aNode.queryOptions && aNode.queryOptions.excludeItems)
 			aNode.queryOptions.excludeItems = false;
-		var winMed = Cc["@mozilla.org/appshell/window-mediator;1"].
-		             getService(Ci.nsIWindowMediator);
-		var win = winMed.getMostRecentWindow("navigator:browser");
+		var win = Cc["@mozilla.org/appshell/window-mediator;1"].
+		          getService(Ci.nsIWindowMediator).
+		          getMostRecentWindow("navigator:browser");
 		var sidebar = win.document.getElementById("sidebar");
 		const sidebarURI = "chrome://browser/content/bookmarks/bookmarksPanel.xul";
 		if (sidebar.getAttribute("src") == sidebarURI) {
+			// if Bookmarks Sidebar is opened, change the current folder
 			sidebar.contentWindow.FlatBookmarks.goDown(aNode);
 		}
 		else {
+			// otherwise, set place: URI to pref and open Bookmarks Sidebar
+			var branch = this.branch;
+			branch.setCharPref("place", aNode.uri);
 			if (PlacesUtils.nodeIsQuery(aNode) && !PlacesUtils.nodeIsQuery(aNode.parent))
-				Application.prefs.get("extensions.flatbm.queryItemId").value = aNode.itemId;
-			if (PlacesUtils.nodeIsTagQuery(aNode))
-				Application.prefs.get("extensions.flatbm.queryTitle").value = aNode.title;
-			win.FlatBookmarksOverlay.place = aNode.uri;
+				this.branch.setIntPref("queryItemId", aNode.itemId);
 			win.toggleSidebar("viewBookmarksSidebar");
 			win.focus();
 		}
@@ -127,14 +136,16 @@ var FlatBookmarksOverlay = {
 		var win = Cc["@mozilla.org/appshell/window-mediator;1"].
 		          getService(Ci.nsIWindowMediator).
 		          getMostRecentWindow("Places:Organizer");
-		if (!win) {
-			openDialog("chrome://browser/content/places/places.xul", "", 
-			           "chrome,toolbar=yes,dialog=no,resizable", "AllBookmarks", aNode.itemId);
-		}
-		else {
+		if (win) {
+			// if Library is opened, change the current folder
 			win.PlacesOrganizer._places.selectItems([aNode.itemId], true);
 			win.PlacesOrganizer._places.focus();
 			win.setTimeout(function() { win.focus(); }, 0);
+		}
+		else {
+			// otherwise, open Library with argument as itemId
+			openDialog("chrome://browser/content/places/places.xul", "", 
+			           "chrome,toolbar=yes,dialog=no,resizable", "AllBookmarks", aNode.itemId);
 		}
 	},
 

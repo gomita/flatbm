@@ -1,30 +1,31 @@
+// This file is included in:
+//  * History Sidebar
 const NHQO = Ci.nsINavHistoryQueryOptions;
 
 var FlatHistory = {
 
-	_prefBranch: null,
+	// nsIPrefBranch
+	_branch: null,
 
 	_inSearchMode: false,
 
 	_backHistory: [],
 
 	get dateFormatBundle() {
-		const STRING_BUNDLE_URI = "chrome://global/locale/dateFormat.properties";
+		const bundleURI = "chrome://global/locale/dateFormat.properties";
 		delete this.dateFormatBundle;
 		return this.dateFormatBundle = Cc["@mozilla.org/intl/stringbundle;1"].
 		                               getService(Ci.nsIStringBundleService).
-		                               createBundle(STRING_BUNDLE_URI);
+		                               createBundle(bundleURI);
 	},
 
 	init: function() {
-		// 従来のツリーが一瞬だけ表示される問題への対策 (1)
+		// this fixes the problem that the old style tree appears in an eye's blink (1)
 		document.documentElement.collapsed = true;
-		// 設定値
-		this._prefBranch = Cc["@mozilla.org/preferences-service;1"].
-		                   getService(Ci.nsIPrefService).
-		                   getBranch("extensions.flatbm.");
-		if (!this._prefBranch.getBoolPref("clickOpensFolder")) {
-			// シングルクリックでフォルダを開く操作を無効化
+		this._branch = Cc["@mozilla.org/preferences-service;1"].getService(Ci.nsIPrefService).
+		               getBranch("extensions.flatbm.");
+		if (!this._branch.getBoolPref("clickOpensFolder")) {
+			// disable opening folder with single click
 			window.eval(
 				"SidebarUtils.handleTreeClick = " + 
 				SidebarUtils.handleTreeClick.toString().replace(
@@ -32,73 +33,74 @@ var FlatHistory = {
 				)
 			);
 		}
-		// place変更時のコールバックを設定
+		// hook place change to update parent folders list
 		window.eval(
 			"gHistoryTree.load = " + 
 			gHistoryTree.load.toString().replace(/\}$/, "FlatHistory.onPlaceChange(); }")
 		);
-		// 検索ボックス
-		// [Firefox3.5] ラベルのidが未設定のためpreviousSiblingで取得
-		var label = document.getElementById("sidebar-search-label") || gSearchBox.previousSibling;
+		// init search bar
+		var label = document.getElementById("sidebar-search-label");
 		gSearchBox.setAttribute("emptytext",   label.value.replace(/:$/, ""));	// [Firefox3.6]
-		gSearchBox.setAttribute("placeholder", label.value.replace(/:$/, ""));	// [Firefox3.7]
+		gSearchBox.setAttribute("placeholder", label.value.replace(/:$/, ""));	// [Firefox4]
 		gSearchBox.setAttribute("accesskey", label.getAttribute("accesskey"));
 		label.hidden = true;
-		// [Firefox3.6] サイドバーオープン状態でFirefox起動時にemptytextが表示されない問題への対策
+		// [Firefox3.6] this fixes the following bug: when Firefox is starting up 
+		// with opening History Sidebar, the place holder text does not appear
 		gSearchBox.focus();
-		// グルーピング選択メニュー
+		// init 'View' button
 		var viewButton = document.getElementById("viewButton");
 		var viewMenu   = document.getElementById("viewMenu");
 		viewMenu.appendChild(viewButton.firstChild);
 		viewMenu.label = viewButton.label;
 		viewButton.hidden = true;
-		// [Mac][Firefox4] list-style-imageが適用されないため「表示」ボタンのアイコンが表示されない問題への対策
+		// [Mac][Firefox4] this fixes the problem: 
+		// 'View' button has a blank space without icon since list-style-image is not applied
 		if (window.getComputedStyle(viewMenu, null).listStyleImage == "none")
 			viewMenu.setAttribute("_noiconic", "true");
-		// 履歴ボタン
+		// init 'History' button
 		var rootButton = document.getElementById("flatbm-history-button");
 		rootButton.label = PlacesUIUtils.getString("OrganizerQueryHistory");
-		// ツールバーボタン
-		var buttonSet = this._prefBranch.getIntPref("buttonSet");
+		// init go-up and back buttons
+		var buttonSet = this._branch.getIntPref("buttonSet");
 		document.getElementById("flatbm-goup").hidden = !(buttonSet & 1);
 		document.getElementById("flatbm-back").hidden = !(buttonSet & 2);
-		if (!this._prefBranch.getBoolPref("expandSubFolders"))
+		if (!this._branch.getBoolPref("expandSubFolders"))
 			document.getElementById("flatbm-folders").removeAttribute("onclick");
-		// ツリー
-		var lastPlaceURI = this._prefBranch.getCharPref("place.history");
+		// init tree
+		var lastPlaceURI = this._branch.getCharPref("place.history");
 		if (lastPlaceURI)
 			gHistoryTree.place = lastPlaceURI;
 		else
 			this.onPlaceChange();
-		// 従来のツリーが一瞬だけ表示される問題への対策 (2)
+		// this fixes the problem that the old style tree appears in an eye's blink (2)
 		document.documentElement.collapsed = false;
 	},
 
 	onOpenFlatContainer: function(aContainer) {
-		// 右クリックメニューを開く際に一瞬フォルダが開閉するバグへの対策
+		// this fixes the problem (???) : 
+		// when showing context menu, folder open and close in an eye's blink
 		if (document.getElementById("placesContext").state == "open")
 			return;
-		// ダブルクリックでフォルダ遷移直後にクリックイベントが発生するバグへの対策
+		// this fixes the problem: 
+		// click event will occur just after changing the current folder with double-click
 		setTimeout(function() { gHistoryTree.place = aContainer.uri; }, 0);
 	},
 
 	onPlaceChange: function() {
-		// place:URIからクエリを逆算
+		// calculate query from place: URI
 		var place = gHistoryTree.view.result.root.uri;
 		var query = {};
 		PlacesUtils.history.queryStringToQueries(place, query, {}, {});
 		query = query.value[0];
 		this._inSearchMode = query.hasSearchTerms;
-/*debug*/Application.console.log(new Date().toLocaleTimeString() + " " + place);
-		// UI更新
+		// init day and site buttons
 		var groupDay  = document.getElementById("flatbm-group-day");
 		var groupSite = document.getElementById("flatbm-group-site");
 		groupDay.hidden = true;
 		groupSite.hidden = true;
 		document.getElementById("flatbm-toolbar").hidden = this._inSearchMode;
-		// 日付ボタン更新
+		// update day button
 		if (query.hasBeginTime && query.hasEndTime) {
-			// beginTime, endTime, 現在時刻をDateオブジェクトに変換して適切なラベルを決定する
 			var beginDate = new Date(parseInt(query.beginTime) / 1000);
 			var endDate   = new Date(parseInt(query.endTime)   / 1000);
 			var nowDate   = new Date(new Date().toDateString());
@@ -132,7 +134,7 @@ var FlatHistory = {
 						label += " " + beginDate.getFullYear();
 				}
 			}
-			// 日付ボタン押下時のplace:URIを決定する
+			// decide appropriate place: URI for date button
 			var newQuery = query.clone();
 			var newOptions = PlacesUtils.history.getNewQueryOptions();
 			newQuery.domainIsHost = false;
@@ -141,39 +143,38 @@ var FlatHistory = {
 			if (gHistoryGrouping == "dayandsite")
 				newOptions.resultType = NHQO.RESULTS_AS_SITE_QUERY;
 			var uri = PlacesUtils.history.queriesToQueryString([newQuery], 1, newOptions);
-			// UI更新
+			// update button
 			groupDay.hidden = false;
 			groupDay.setAttribute("label", label);
 			groupDay.setAttribute("uri", uri);
-/*debug*/	groupDay.setAttribute("tooltiptext", uri);
+			groupDay.setAttribute("tooltiptext", uri);	// #debug
 		}
-		// サイトボタン更新
+		// update site button
 		if (query.domainIsHost) {
 			groupSite.hidden = false;
 			groupSite.setAttribute("label", query.domain || PlacesUtils.getString("localhost"));
 			groupSite.setAttribute("uri", place);
-/*debug*/	groupSite.setAttribute("tooltiptext", place);
+			groupSite.setAttribute("tooltiptext", place);	// #debug
 		}
-		// 履歴の保持
+		// remember the last place: URI
 		if (!this._inSearchMode) {
 			var lastPlace = this._backHistory.length > 0 ? 
 			                this._backHistory[this._backHistory.length - 1] : null;
 			if (lastPlace != place)
 				this._backHistory.push(place);
 		}
-		// コマンドの有効化/無効化
 		this._updateCommands();
-		// 状態の記憶
 		if (!this._inSearchMode)
-			this._prefBranch.setCharPref("place.history", place);
+			this._branch.setCharPref("place.history", place);
 	},
 
 	onGroupingChange: function() {
-		// 最後の履歴のみを残して、それ以前の履歴を削除
+		// keep only the last one of history and remove others
 		this._backHistory = this._backHistory.splice(-1);
 		this._updateCommands();
 	},
 
+	// expand menu of day group or not
 	_expandDayGroup: false,
 
 	generatePopup: function(event) {
@@ -182,12 +183,12 @@ var FlatHistory = {
 		if (gHistoryGrouping == "dayandsite" && popup.parentNode.id != "flatbm-group-day") {
 			var uri;
 			if (popup.parentNode.id == "flatbm-group-site")
-				// グルーピングが「日付とサイト名順」でサイトボタンのメニューを開く場合
-				// 日付ボタンのplace:URIからクエリを逆算する
+				// when populating menu of site button with 'Day and Site' grouping, 
+				// get place: URI from day button
 				uri = document.getElementById("flatbm-group-day").getAttribute("uri");
 			else
-				// グルーピングが「日付とサイト名順」で日付ボタンのサイトサブメニューを開く場合
-				// 親の日付サブメニューのplace:URIからクエリを逆算する
+				// when populating sub menu of day button with 'Day and Site' grouping...
+				// get place: URI from parent sub menu of day button
 				uri = popup.parentNode.getAttribute("uri");
 			var queriesRef = {}, optionsRef = {};
 			PlacesUtils.history.queryStringToQueries(uri, queriesRef, {}, optionsRef);
@@ -195,7 +196,7 @@ var FlatHistory = {
 			options = optionsRef.value;
 		}
 		else {
-			// それ以外の場合、履歴ルート相当のクエリを生成する
+			// in other cases, generate query which is equivalent to root
 			// @see searchHistory
 			query = PlacesUtils.history.getNewQuery();
 			options = PlacesUtils.history.getNewQueryOptions();
@@ -213,11 +214,10 @@ var FlatHistory = {
 					break;
 			}
 		}
-		// 日付グループのサブメニュー展開？
 		this._expandDayGroup = (
 			gHistoryGrouping == "dayandsite" && 
 			popup.parentNode.id == "flatbm-group-day" && 
-			this._prefBranch.getBoolPref("expandSubFolders")
+			this._branch.getBoolPref("expandSubFolders")
 		);
 		var root = PlacesUtils.history.executeQueries([query], 1, options).root;
 		root.containerOpen = true;
@@ -248,7 +248,7 @@ var FlatHistory = {
 			elt.setAttribute("hostContainer", "true");
 		elt.setAttribute("label", node.title);
 		elt.setAttribute("uri", node.uri);
-/*debug*/elt.setAttribute("tooltiptext", node.uri);
+		elt.setAttribute("tooltiptext", node.uri);	// #debug
 		var groupDay  = document.getElementById("flatbm-group-day");
 		var groupSite = document.getElementById("flatbm-group-site");
 		if ((!groupDay.hidden  && node.uri == groupDay.getAttribute("uri")) || 
@@ -261,7 +261,7 @@ var FlatHistory = {
 		if (this._expandDayGroup)
 			elt.appendChild(document.createElement("menupopup"));
 		this._asyncPopup.appendChild(elt);
-		// 次のキューへ
+		// go next with minimal delay every 50th to avoid freezing
 		if (this._asyncQueue.length % 50 == 0)
 			this._asyncTimer = setTimeout(function(self) { self._asyncNext(); }, 0, this);
 		else
@@ -287,9 +287,9 @@ var FlatHistory = {
 	_updateCommands: function() {
 		var groupDay  = document.getElementById("flatbm-group-day");
 		var groupSite = document.getElementById("flatbm-group-site");
-		// 検索モードOFFでなおかつルートフォルダでなければgoUp可能
+		// enable go-up button if not in search mode and not showing root folder
 		var canGoUp = !this._inSearchMode && (!groupDay.hidden || !groupSite.hidden);
-		// 検索モードOFFでなおかつ前のフォルダの履歴があればback可能
+		// enable back button if not in search mode and having back history
 		var canBack = !this._inSearchMode && this._backHistory.length >= 2;
 		var setElementDisabled = function(aEltId, aDisabled) {
 			var elt = document.getElementById(aEltId);
@@ -306,18 +306,16 @@ var FlatHistory = {
 		var groupDay  = document.getElementById("flatbm-group-day");
 		var groupSite = document.getElementById("flatbm-group-site");
 		if (!groupSite.hidden && !groupDay.hidden)
-			// 日付ボタンとサイトボタンともに表示されている場合に限り、日付ボタンを押下
+			// if day and site buttons are both visible, go to day folder
 			groupDay.doCommand();
 		else
-			// それ以外はルートへ移動
+			// otherwise, go to root folder
 			document.getElementById("flatbm-history-button").doCommand();
 	},
 
 	back: function() {
-/*debug*/if (document.getElementById("flatbmCmd:back").getAttribute("disabled") == "true") alert("called disable command!");
 		if (this._backHistory.length < 2)
 			return;
-/*debug*/Application.console.log(this._backHistory.join("\n"));
 		this._backHistory.pop();
 		gHistoryTree.place = this._backHistory.pop();
 	},
@@ -328,16 +326,17 @@ var FlatHistory = {
 		var row = {};
 		gHistoryTree.treeBoxObject.getCellAt(aEvent.clientX, aEvent.clientY, row, {}, {});
 		if (row.value == -1) {
-			// ツリーの余白をダブルクリック
-			var command = document.getElementById("flatbmCmd:goUp");
-			if (!command.hasAttribute("disabled"))
-				command.doCommand();
+			// when double-clicking on a blank space of tree...
+			var cmd = document.getElementById("flatbmCmd:goUp");
+			if (!cmd.hasAttribute("disabled"))
+				cmd.doCommand();
 		}
 	},
 
 };
 
 
+// XXXhack to initialize 'View' menu instead of 'View' button
 window.eval(HistorySidebarInit.toString().replace("viewButton", "viewMenu"));
 window.addEventListener("load", function() { FlatHistory.init(); }, false);
 

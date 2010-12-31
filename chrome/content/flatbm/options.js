@@ -24,7 +24,7 @@ var PrefsUI = {
 	done: function() {
 		if (!this.changed)
 			return;
-		// すべてのブラウザウィンドウのブックマークサイドバーまたは履歴サイドバーをリロード
+		// reload each Bookmarks Sidebars and History Sidebars in all browser windows
 		const bookmarksPanelURI = "chrome://browser/content/bookmarks/bookmarksPanel.xul";
 		const historyPanelURI   = "chrome://browser/content/history/history-panel.xul";
 		var winMed = Components.classes["@mozilla.org/appshell/window-mediator;1"].
