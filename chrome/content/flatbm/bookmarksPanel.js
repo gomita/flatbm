@@ -46,9 +46,6 @@ var FlatBookmarks = {
 		textbox.setAttribute("placeholder", label.value.replace(/:$/, ""));	// [Firefox4]
 		textbox.setAttribute("accesskey", label.getAttribute("accesskey"));
 		label.hidden = true;
-		// [Firefox3.6] this fixes the following bug: when Firefox is starting up 
-		// with opening Bookmarks Sidebar, the place holder text does not appear
-		textbox.focus();
 		// set itemId of root folders
 		var setElementItemId = function(aEltId, aItemId) {
 			document.getElementById(aEltId).setAttribute("itemId", aItemId);

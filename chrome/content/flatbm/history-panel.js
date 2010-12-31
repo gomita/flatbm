@@ -44,9 +44,6 @@ var FlatHistory = {
 		gSearchBox.setAttribute("placeholder", label.value.replace(/:$/, ""));	// [Firefox4]
 		gSearchBox.setAttribute("accesskey", label.getAttribute("accesskey"));
 		label.hidden = true;
-		// [Firefox3.6] this fixes the following bug: when Firefox is starting up 
-		// with opening History Sidebar, the place holder text does not appear
-		gSearchBox.focus();
 		// init 'View' button
 		var viewButton = document.getElementById("viewButton");
 		var viewMenu   = document.getElementById("viewMenu");
