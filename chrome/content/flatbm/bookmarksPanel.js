@@ -70,6 +70,11 @@ var FlatBookmarks = {
 		);
 		// this fixes the problem that the old style tree appears in an eye's blink (2)
 		document.documentElement.collapsed = false;
+		// [Firefox3.6] this fixes the following bug: when Firefox is starting up 
+		// with opening Bookmarks Sidebar, placeholder text does not appear
+		// NOTE: do this after setting collapsed of documentElement to false
+		textbox.focus();
+		textbox.blur();
 	},
 
 	onOpenFlatContainer: function(aContainer) {

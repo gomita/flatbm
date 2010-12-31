@@ -71,6 +71,11 @@ var FlatHistory = {
 			this.onPlaceChange();
 		// this fixes the problem that the old style tree appears in an eye's blink (2)
 		document.documentElement.collapsed = false;
+		// [Firefox3.6] this fixes the following bug: when Firefox is starting up 
+		// with opening History Sidebar, placeholder text does not appear
+		// NOTE: do this after setting collapsed of documentElement to false
+		gSearchBox.focus();
+		gSearchBox.blur();
 	},
 
 	onOpenFlatContainer: function(aContainer) {
