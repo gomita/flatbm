@@ -1,0 +1,8 @@
+<!ENTITY prefs.title "Inställningar">
+<!ENTITY prefs.buttonSet.back "Visa Bakåt-knappen">
+<!ENTITY prefs.buttonSet.goup "Visa Gå upp-knappen">
+<!ENTITY prefs.expandSubFolders "Expandera undermappar i listan över överordnade mappar">
+<!ENTITY prefs.clickOpensFolder "Öppna mappar med enkelklick">
+<!ENTITY prefs.showInSidebarMenu "Lägg till &quot;Visa i sidopanelen&quot;-menyn i mapparnas snabbmeny">
+<!ENTITY prefs.showInOrganizerMenu "Lägg till &quot;Ordna bokmärken…&quot;-menyn i mapparnas snabbmeny">
+<!ENTITY prefs.restart "Ändringar kräver att Firefox startas om.">

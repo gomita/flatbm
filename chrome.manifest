@@ -9,6 +9,7 @@ locale	flatbm	fr	chrome/locale/fr/flatbm/
 locale	flatbm	zh-TW	chrome/locale/zh-TW/flatbm/
 locale	flatbm	sr	chrome/locale/sr/flatbm/
 locale	flatbm	hu-HU	chrome/locale/hu-HU/flatbm/
+locale	flatbm	sv-SE	chrome/locale/sv-SE/flatbm/
 skin	flatbm	classic/1.0	chrome/skin/classic/flatbm/
 
 overlay	chrome://browser/content/places/placesOverlay.xul	chrome://flatbm/content/placesOverlay.xul

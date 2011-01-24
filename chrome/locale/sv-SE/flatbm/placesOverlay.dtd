@@ -1,0 +1,5 @@
+<!ENTITY flatbm.showInSidebar.label "Visa i sidopanelen">
+<!ENTITY flatbm.showInSidebar.accesskey "d">
+<!-- LOCALIZATION NOTE : This should be same as organizeBookmarks.label in browser.dtd -->
+<!ENTITY flatbm.showInOrganizer.label "Ordna bokmärken…">
+<!ENTITY flatbm.showInOrganizer.accesskey "b">
