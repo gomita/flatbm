@@ -1,0 +1,5 @@
+<!ENTITY flatbm.showInSidebar.label "Mostrar en la Barra lateral">
+<!ENTITY flatbm.showInSidebar.accesskey "e">
+<!-- LOCALIZATION NOTE : This should be same as organizeBookmarks.label in browser.dtd -->
+<!ENTITY flatbm.showInOrganizer.label "Organizar Marcadores...">
+<!ENTITY flatbm.showInOrganizer.accesskey "z">
