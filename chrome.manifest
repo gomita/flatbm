@@ -1,6 +1,7 @@
 content	flatbm	chrome/content/flatbm/
 locale	flatbm	en-US	chrome/locale/en-US/flatbm/
 locale	flatbm	ja	chrome/locale/ja/flatbm/
+locale	flatbm	cs	chrome/locale/cs/flatbm/
 locale	flatbm	de	chrome/locale/de/flatbm/
 locale	flatbm	es-AR	chrome/locale/es-AR/flatbm/
 locale	flatbm	es-ES	chrome/locale/es-ES/flatbm/

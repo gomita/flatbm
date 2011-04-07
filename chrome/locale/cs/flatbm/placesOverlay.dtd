@@ -1,0 +1,5 @@
+<!ENTITY flatbm.showInSidebar.label "Zobrazit v postranní liště">
+<!ENTITY flatbm.showInSidebar.accesskey "p">
+<!-- LOCALIZATION NOTE : This should be same as organizeBookmarks.label in browser.dtd -->
+<!ENTITY flatbm.showInOrganizer.label "Zobrazit všechny záložky">
+<!ENTITY flatbm.showInOrganizer.accesskey "b">
