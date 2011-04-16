@@ -1,0 +1,8 @@
+<!ENTITY prefs.title "选项">
+<!ENTITY prefs.buttonSet.back "显示后退按钮">
+<!ENTITY prefs.buttonSet.goup "显示向上按钮">
+<!ENTITY prefs.expandSubFolders "在父文件夹列表中展开子文件夹">
+<!ENTITY prefs.clickOpensFolder "单击即可打开文件夹">
+<!ENTITY prefs.showInSidebarMenu "添加[在侧栏中显示]菜单到文件夹的右键菜单">
+<!ENTITY prefs.showInOrganizerMenu "添加[管理书签…]菜单到文件夹的右键菜单">
+<!ENTITY prefs.restart "更改需要重新启动 Firefox。">

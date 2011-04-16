@@ -11,6 +11,7 @@ locale	flatbm	it	chrome/locale/it/flatbm/
 locale	flatbm	pt-BR	chrome/locale/pt-BR/flatbm/
 locale	flatbm	sr	chrome/locale/sr/flatbm/
 locale	flatbm	sv-SE	chrome/locale/sv-SE/flatbm/
+locale	flatbm	zh-CN	chrome/locale/zh-CN/flatbm/
 locale	flatbm	zh-TW	chrome/locale/zh-TW/flatbm/
 skin	flatbm	classic/1.0	chrome/skin/classic/flatbm/
 

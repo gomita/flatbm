@@ -1,0 +1,5 @@
+<!ENTITY flatbm.showInSidebar.label "在侧栏中显示">
+<!ENTITY flatbm.showInSidebar.accesskey "H">
+<!-- LOCALIZATION NOTE : This should be same as organizeBookmarks.label in browser.dtd -->
+<!ENTITY flatbm.showInOrganizer.label "管理书签…">
+<!ENTITY flatbm.showInOrganizer.accesskey "R">
