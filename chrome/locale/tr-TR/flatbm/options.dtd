@@ -1,0 +1,8 @@
+<!ENTITY prefs.title "Seçenekler">
+<!ENTITY prefs.buttonSet.back "Geri düğmesini Göster">
+<!ENTITY prefs.buttonSet.goup "Yukarı git düğmesini Göster">
+<!ENTITY prefs.expandSubFolders "Alt klasörleri genişlet">
+<!ENTITY prefs.clickOpensFolder "Tek tıklamayla klasörü aç">
+<!ENTITY prefs.showInSidebarMenu "Klasörün içerik menüsüne 'Kenar Çubuğunda göster' menüsü ekle">
+<!ENTITY prefs.showInOrganizerMenu "Klasörün içerik menüsüne 'Yer imlerini düzenle...' menüsü ekle">
+<!ENTITY prefs.restart "Değişikler Firefox'un yeniden başlatılmasını gerektirir.">

@@ -1,0 +1,5 @@
+<!ENTITY flatbm.showInSidebar.label "Kenar Çubuğunda Göster">
+<!ENTITY flatbm.showInSidebar.accesskey "H">
+<!-- LOCALIZATION NOTE : This should be same as organizeBookmarks.label in browser.dtd -->
+<!ENTITY flatbm.showInOrganizer.label "Yer imlerini Düzenle ...">
+<!ENTITY flatbm.showInOrganizer.accesskey "R">
