@@ -67,15 +67,17 @@ var FlatBookmarksOverlay = {
 
 	addExtraItems: function(event) {
 		var popup = event.originalTarget;
-		if (!popup.lastChild || popup.lastChild.className != "openintabs-menuitem")
-			// don't add extra items if last menu item of popup is not 'Open All in Tabs'
-			// this also avoids duplication of extra menu items for same popup
+		if (popup.lastChild.className == "flatbm-extra-item")
+			// avoids duplication of extra menu items for same popup
 			return;
 		if (PlacesUtils.nodeIsTagQuery(this.fx4 ? popup._placesNode : popup._resultNode))
 			// don't add extra items if popup is of a tag
 			return;
+		if (popup.lastChild.className != "openintabs-menuitem")
+			popup.appendChild(document.createElement("menuseparator"));
 		if (this._showInSidebarMenu) {
 			var elt = document.createElement("menuitem");
+			elt.className = "flatbm-extra-item";
 			elt.setAttribute("label", 
 				document.getElementById("flatbmContext_showInSidebar").label
 			);
@@ -90,6 +92,7 @@ var FlatBookmarksOverlay = {
 		}
 		if (this._showInOrganizerMenu) {
 			var elt = document.createElement("menuitem");
+			elt.className = "flatbm-extra-item";
 			elt.setAttribute("label", 
 				document.getElementById("flatbmContext_showInOrganizer").label
 			);
