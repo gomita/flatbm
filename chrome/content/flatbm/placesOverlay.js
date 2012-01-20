@@ -67,6 +67,9 @@ var FlatBookmarksOverlay = {
 
 	addExtraItems: function(event) {
 		var popup = event.originalTarget;
+		if (popup.id == "goPopup")
+			// don't add extra items to 'History' menu
+			return;
 		if (popup.lastChild.className == "flatbm-extra-item")
 			// avoids duplication of extra menu items for same popup
 			return;
