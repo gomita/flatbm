@@ -5,12 +5,6 @@
 //  * Library
 var FlatBookmarksOverlay = {
 
-	get fx4() {
-		var appInfo = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULAppInfo);
-		delete this.fx4;
-		return this.fx4 = parseFloat(appInfo.version) >= 4.0;
-	},
-
 	get mac() {
 		delete this.mac;
 		return this.mac = navigator.platform.indexOf("Mac") == 0;
@@ -41,22 +35,12 @@ var FlatBookmarksOverlay = {
 		if ((this._showInSidebarMenu || this._showInOrganizerMenu) && 
 		    window.location.href == "chrome://browser/content/browser.xul") {
 			// XXXhack to add extra menu items to bookmark folders' menu popup
-			if (this.fx4) {
-				PlacesViewBase.prototype.__onPopupShowing = 
-				PlacesViewBase.prototype._onPopupShowing;
-				PlacesViewBase.prototype._onPopupShowing = function(aEvent) {
-					this.__onPopupShowing.apply(this, arguments);
-					FlatBookmarksOverlay.addExtraItems(aEvent);
-				};
-			}
-			else {
-				BookmarksEventHandler._onPopupShowing = 
-				BookmarksEventHandler.onPopupShowing;
-				BookmarksEventHandler.onPopupShowing = function(aEvent) {
-					this._onPopupShowing.apply(this, arguments);
-					FlatBookmarksOverlay.addExtraItems(aEvent);
-				};
-			}
+			PlacesViewBase.prototype.__onPopupShowing = 
+			PlacesViewBase.prototype._onPopupShowing;
+			PlacesViewBase.prototype._onPopupShowing = function(aEvent) {
+				this.__onPopupShowing.apply(this, arguments);
+				FlatBookmarksOverlay.addExtraItems(aEvent);
+			};
 		}
 		// when opening Library with arguments[1] as itemId, select the given item first
 		if ("PlacesOrganizer" in window && window.arguments && window.arguments[1]) {
@@ -73,7 +57,7 @@ var FlatBookmarksOverlay = {
 		if (popup.lastChild.className == "flatbm-extra-item")
 			// avoids duplication of extra menu items for same popup
 			return;
-		if (PlacesUtils.nodeIsTagQuery(this.fx4 ? popup._placesNode : popup._resultNode))
+		if (PlacesUtils.nodeIsTagQuery(popup._placesNode))
 			// don't add extra items if popup is of a tag
 			return;
 		if (popup.lastChild.className != "openintabs-menuitem")
@@ -85,8 +69,7 @@ var FlatBookmarksOverlay = {
 				document.getElementById("flatbmContext_showInSidebar").label
 			);
 			elt.setAttribute("oncommand", 
-				this.fx4 ? "FlatBookmarksOverlay.showInSidebar(this.parentNode._placesNode);"
-				         : "FlatBookmarksOverlay.showInSidebar(this.parentNode._resultNode);"
+				"FlatBookmarksOverlay.showInSidebar(this.parentNode._placesNode);"
 			);
 			popup.appendChild(elt);
 			// [Mac] don't show icon of extra item
@@ -100,8 +83,7 @@ var FlatBookmarksOverlay = {
 				document.getElementById("flatbmContext_showInOrganizer").label
 			);
 			elt.setAttribute("oncommand", 
-				this.fx4 ? "FlatBookmarksOverlay.showInOrganizer(this.parentNode._placesNode);"
-				         : "FlatBookmarksOverlay.showInOrganizer(this.parentNode._resultNode);"
+				"FlatBookmarksOverlay.showInOrganizer(this.parentNode._placesNode);"
 			);
 			popup.appendChild(elt);
 			// [Mac] don't show icon of extra item

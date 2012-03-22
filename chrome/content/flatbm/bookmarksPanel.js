@@ -106,12 +106,6 @@ var FlatBookmarks = {
 		this._updateCommands();
 	},
 
-	get fx4() {
-		var appInfo = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULAppInfo);
-		delete this.fx4;
-		return this.fx4 = parseFloat(appInfo.version) >= 4.0;
-	},
-
 	_dragOverTime: null,	// time to start drag-over operation
 	_dragOverItem: null,	// itemId of target folder for drag-over operation
 
@@ -145,12 +139,10 @@ var FlatBookmarks = {
 				}
 				break;
 			case "dragleave": 
-				// [Firefox4] this fixes the problem: current folder will be changed 
+				// this fixes the problem: current folder will be changed 
 				// just after starting drag-over operation due to odd events sequence
-				if (!this.fx4) {
-					this._dragOverTime = null;
-					this._dragOverItem = null;
-				}
+				this._dragOverTime = null;
+				this._dragOverItem = null;
 				event.target.removeAttribute("open");
 				break;
 			case "drop": 
