@@ -31,6 +31,7 @@
 				<toolbarbutton id="editBMPanel_toolbarFolderItem" />
 				<toolbarbutton id="editBMPanel_bmRootItem" />
 				<toolbarbutton id="editBMPanel_unfiledRootItem" />
+				<toolbarbutton id="mobileRootItem" class="bookmark-item" container="true" hidden="true" />
 				<spacer flex="1" />
 				<toolbarbutton id="flatbm-back" class="plain" command="flatbmCmd:back" />
 				<toolbarbutton id="flatbm-goup" class="plain" command="flatbmCmd:goUp" />

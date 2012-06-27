@@ -18,6 +18,8 @@ var FlatBookmarks = {
 
 	_backHistory: [],
 
+	_mobileRootId: null,
+
 	init: function() {
 		// this fixes the problem that the old style tree appears in an eye's blink (1)
 		document.documentElement.collapsed = true;
@@ -53,6 +55,16 @@ var FlatBookmarks = {
 		setElementItemId("editBMPanel_toolbarFolderItem", PlacesUtils.toolbarFolderId);
 		setElementItemId("editBMPanel_bmRootItem",        PlacesUtils.bookmarksMenuFolderId);
 		setElementItemId("editBMPanel_unfiledRootItem",   PlacesUtils.unfiledBookmarksFolderId);
+		// set itemId of mobile root folder
+		var mobileRoot = PlacesUtils.annotations.getItemsWithAnnotation("mobile/bookmarksRoot", {});
+		if (mobileRoot.length != 0) {
+			this._mobileRootId = mobileRoot[0];
+			setElementItemId("mobileRootItem", this._mobileRootId);
+			var button = document.getElementById("mobileRootItem");
+			var bundle = Services.strings.createBundle("chrome://weave/locale/services/sync.properties");
+			button.setAttribute("_title", bundle.GetStringFromName("mobile.label"));
+			button.hidden = false;
+		}
 		// init go-up and back buttons
 		var buttonSet = this._branch.getIntPref("buttonSet");
 		document.getElementById("flatbm-goup").hidden = !(buttonSet & 1);
@@ -313,6 +325,10 @@ var FlatBookmarks = {
 				folder.setAttribute("buttonId", id);
 			folder.setAttribute("label", PlacesUtils.bookmarks.getItemTitle(itemId));
 			folder.setAttribute("itemId", itemId);
+			if (itemId == this._mobileRootId) {
+				var button = document.getElementById("mobileRootItem");
+				folder.setAttribute("label", button.getAttribute("_title"));
+			}
 			if (PlacesUtils.itemIsLivemark(itemId))
 				folder.setAttribute("livemark", "true");
 			if (isQuery) {
@@ -343,7 +359,9 @@ var FlatBookmarks = {
 	// this will be called from: onSearchBookmarks, _setTreePlace
 	_updateCommands: function() {
 		// enable go-up button if not in search mode and not showing root folder
-		var canGoUp = !this._inSearchMode && !PlacesUtils.isRootItem(this.tree.view.result.root.itemId);
+		var itemId = this.tree.view.result.root.itemId;
+		var canGoUp = !this._inSearchMode && !PlacesUtils.isRootItem(itemId) && 
+		              itemId != this._mobileRootId;
 		// enable back button if not in search mode and having back history
 		var canBack = !this._inSearchMode && this._backHistory.length >= 2;
 		var setElementDisabled = function(aEltId, aDisabled) {
