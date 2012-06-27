@@ -44,8 +44,7 @@ var FlatBookmarks = {
 		// init search bar
 		var textbox = document.getElementById("search-box");
 		var label = document.getElementById("sidebar-search-label");
-		textbox.setAttribute("emptytext",   label.value.replace(/:$/, ""));	// [Firefox3.6]
-		textbox.setAttribute("placeholder", label.value.replace(/:$/, ""));	// [Firefox4]
+		textbox.setAttribute("placeholder", label.value.replace(/:$/, ""));
 		textbox.setAttribute("accesskey", label.getAttribute("accesskey"));
 		label.hidden = true;
 		// set itemId of root folders
@@ -82,11 +81,6 @@ var FlatBookmarks = {
 		);
 		// this fixes the problem that the old style tree appears in an eye's blink (2)
 		document.documentElement.collapsed = false;
-		// [Firefox3.6] this fixes the following bug: when Firefox is starting up 
-		// with opening Bookmarks Sidebar, placeholder text does not appear
-		// NOTE: do this after setting collapsed of documentElement to false
-		textbox.focus();
-		textbox.blur();
 	},
 
 	onOpenFlatContainer: function(aContainer) {
@@ -167,8 +161,6 @@ var FlatBookmarks = {
 				PlacesControllerDragHelper.currentDataTransfer = event.dataTransfer;
 				PlacesControllerDragHelper.currentDropTarget = event.target;
 				var ip = new InsertionPoint(itemId, -1, Ci.nsITreeView.DROP_ON, false);
-				// [Firefox4] PlacesControllerDragHelper.onDrop accepts the second argument 
-				// as dataTransfer object (and does not accept in Firefox3.6)
 				PlacesControllerDragHelper.onDrop(ip, event.dataTransfer);
 				break;
 			default: 

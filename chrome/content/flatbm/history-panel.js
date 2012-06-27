@@ -40,8 +40,7 @@ var FlatHistory = {
 		);
 		// init search bar
 		var label = document.getElementById("sidebar-search-label");
-		gSearchBox.setAttribute("emptytext",   label.value.replace(/:$/, ""));	// [Firefox3.6]
-		gSearchBox.setAttribute("placeholder", label.value.replace(/:$/, ""));	// [Firefox4]
+		gSearchBox.setAttribute("placeholder", label.value.replace(/:$/, ""));
 		gSearchBox.setAttribute("accesskey", label.getAttribute("accesskey"));
 		label.hidden = true;
 		// init 'View' button
@@ -50,7 +49,7 @@ var FlatHistory = {
 		viewMenu.appendChild(viewButton.firstChild);
 		viewMenu.label = viewButton.label;
 		viewButton.hidden = true;
-		// [Mac][Firefox4] this fixes the problem: 
+		// [Mac] this fixes the problem: 
 		// 'View' button has a blank space without icon since list-style-image is not applied
 		if (window.getComputedStyle(viewMenu, null).listStyleImage == "none")
 			viewMenu.setAttribute("_noiconic", "true");
@@ -71,11 +70,6 @@ var FlatHistory = {
 			this.onPlaceChange();
 		// this fixes the problem that the old style tree appears in an eye's blink (2)
 		document.documentElement.collapsed = false;
-		// [Firefox3.6] this fixes the following bug: when Firefox is starting up 
-		// with opening History Sidebar, placeholder text does not appear
-		// NOTE: do this after setting collapsed of documentElement to false
-		gSearchBox.focus();
-		gSearchBox.blur();
 	},
 
 	onOpenFlatContainer: function(aContainer) {
