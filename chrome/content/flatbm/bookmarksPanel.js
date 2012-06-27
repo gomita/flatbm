@@ -179,7 +179,7 @@ var FlatBookmarks = {
 		var empty = true;
 		for (var i = 0; i < root.childCount; i++) {
 			var node = root.getChild(i);
-			if (!PlacesUtils.nodeIsFolder(node) || PlacesUtils.nodeIsLivemarkContainer(node))
+			if (!PlacesUtils.nodeIsFolder(node) || this._nodeIsLivemark(node))
 				continue;
 			var eltName = expand ? "menu" : "menuitem";
 			var elt = document.createElement(eltName);
@@ -321,7 +321,7 @@ var FlatBookmarks = {
 				var button = document.getElementById("mobileRootItem");
 				folder.setAttribute("label", button.getAttribute("_title"));
 			}
-			if (PlacesUtils.itemIsLivemark(itemId))
+			if (this._nodeIsLivemark(node))
 				folder.setAttribute("livemark", "true");
 			if (isQuery) {
 				folder.setAttribute("query", "true");
@@ -365,6 +365,12 @@ var FlatBookmarks = {
 		};
 		setElementDisabled("flatbmCmd:goUp", !canGoUp);
 		setElementDisabled("flatbmCmd:back", !canBack);
+	},
+
+	_nodeIsLivemark: function(aNode) {
+		return (
+			PlacesUtils.annotations.itemHasAnnotation(aNode.itemId, PlacesUtils.LMANNO_FEEDURI)
+		);
 	},
 
 	_setUnicharPref: function(aName, aValue) {
