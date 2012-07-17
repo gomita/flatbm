@@ -145,9 +145,16 @@ var FlatBookmarks = {
 				}
 				break;
 			case "dragleave": 
+				// ignore dragleave event inside of a folder or a root folder
+				var elt = event.relatedTarget;
+				while (elt) {
+					if (elt == event.target)
+						return;
+					elt = elt.parentNode;
+				}
 				// this fixes the problem: current folder will be changed 
 				// just after starting drag-over operation due to odd events sequence
-				this._dragOverTime = null;
+				this._dragOverTime = Date.now();
 				this._dragOverItem = null;
 				event.target.removeAttribute("open");
 				break;
