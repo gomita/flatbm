@@ -35,12 +35,11 @@ var FlatBookmarks = {
 			);
 		}
 		// hook input in search bar and show or hide Flat Bookmarks toolbar
-		window.eval(
-			searchBookmarks.toSource().replace(
-				"}}", 
-				"} FlatBookmarks.onSearchBookmarks(aSearchString); }"
-			)
-		);
+		window._searchBookmarks = searchBookmarks;
+		searchBookmarks = function searchBookmarks(aSearchString) {
+			_searchBookmarks.apply(this, arguments);
+			FlatBookmarks.onSearchBookmarks(aSearchString);
+		};
 		// init search bar
 		var textbox = document.getElementById("search-box");
 		var label = document.getElementById("sidebar-search-label");
