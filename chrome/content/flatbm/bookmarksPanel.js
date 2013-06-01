@@ -239,6 +239,20 @@ var FlatBookmarks = {
 		if (!itemId) alert("Assertion failed!\nno itemId at " + event.target.id);	// #debug
 		if (!itemId)
 			return;
+		// when clicking on a toolbar button, get the last itemId corresponding to the button
+		if (event.target.localName == "toolbarbutton") {
+			var pref;
+			switch (parseInt(itemId)) {
+				case PlacesUtils.toolbarFolderId         : pref = "folder.toolbar"; break;
+				case PlacesUtils.bookmarksMenuFolderId   : pref = "folder.menu"; break;
+				case PlacesUtils.unfiledBookmarksFolderId: pref = "folder.unsorted"; break;
+				case this._mobileRootId                  : pref = "folder.mobile"; break;
+				default: 
+			}
+			var lastItemId = this._branch.getIntPref(pref);
+			if (lastItemId && this._validateItemId(lastItemId))
+				itemId = lastItemId;
+		}
 		this._setTreePlace(this._makePlaceForFolder(itemId));
 	},
 
@@ -280,19 +294,25 @@ var FlatBookmarks = {
 		this._setTreePlace(place);
 	},
 
+	// check whether aItemId really exists or not
+	_validateItemId: function(aItemId) {
+		try {
+			PlacesUtils.bookmarks.getItemTitle(aItemId);
+			return true;
+		}
+		catch (ex) {
+			// NS_ERROR_ILLEGAL_VALUE
+			alert("Error!\ninvalid itemId: " + aItemId);	// #debug
+			return false;
+		}
+	},
+
 	// this will be called from: init, onButtonCommand, goDown, goUp
 	_setTreePlace: function(aPlace) {
 		if (/folder=(\d+)/.test(aPlace)) {
-			var itemId = RegExp.$1;
-			try {
-				// check itemId exists
-				PlacesUtils.bookmarks.getItemTitle(itemId);
-			}
-			catch (ex) {
-				// NS_ERROR_ILLEGAL_VALUE is thrown since itemId does not exist
-				alert("folder does not exist: " + itemId + "\n" + aPlace);	// #debug
+			if (!this._validateItemId(RegExp.$1))
+				// fall back to bookmarks menu
 				aPlace = this._makePlaceForFolder(PlacesUtils.bookmarksMenuFolderId);
-			}
 		}
 		var tree = this.tree;
 		tree.place = aPlace;
@@ -352,6 +372,17 @@ var FlatBookmarks = {
 			this._backHistory.push([rootItemId, aPlace]);
 		this._updateCommands();
 		this._branch.setCharPref("place", aPlace);
+		// remember the itemId for each root items
+		if (!folder) alert("Assertion failed!\nfolder is undefined");	// #debug
+		var pref;
+		switch (parseInt(folder.getAttribute("itemId"))) {
+			case PlacesUtils.toolbarFolderId         : pref = "folder.toolbar"; break;
+			case PlacesUtils.bookmarksMenuFolderId   : pref = "folder.menu"; break;
+			case PlacesUtils.unfiledBookmarksFolderId: pref = "folder.unsorted"; break;
+			case this._mobileRootId                  : pref = "folder.mobile"; break;
+			default: return;
+		}
+		this._branch.setIntPref(pref, rootItemId);
 	},
 
 	// this will be called from: onSearchBookmarks, _setTreePlace

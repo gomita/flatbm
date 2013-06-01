@@ -7,3 +7,7 @@ pref("extensions.flatbm.place", "");
 pref("extensions.flatbm.place.history", "");
 pref("extensions.flatbm.queryTitle", "");
 pref("extensions.flatbm.queryItemId", 0);
+pref("extensions.flatbm.folder.toolbar", 0);
+pref("extensions.flatbm.folder.menu", 0);
+pref("extensions.flatbm.folder.unsorted", 0);
+pref("extensions.flatbm.folder.mobile", 0);
