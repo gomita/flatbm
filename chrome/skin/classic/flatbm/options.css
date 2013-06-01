@@ -14,3 +14,7 @@
 	max-height: 14px;
 }
 
+.checkbox-label {
+	white-space: nowrap;
+}
+

@@ -32,6 +32,7 @@
 		<checkbox label="&prefs.clickOpensFolder;" preference="clickOpensFolder" />
 		<checkbox label="&prefs.showInSidebarMenu; *" preference="showInSidebarMenu" />
 		<checkbox label="&prefs.showInOrganizerMenu; *" preference="showInOrganizerMenu" />
+		<separator class="groove" />
 		<description>* &prefs.restart;</description>
 	</prefpane>
 
