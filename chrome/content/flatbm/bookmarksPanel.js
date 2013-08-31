@@ -405,6 +405,8 @@ var FlatBookmarks = {
 	},
 
 	_nodeIsLivemark: function(aNode) {
+		if (aNode.itemId < 0)
+			return false;
 		return (
 			PlacesUtils.annotations.itemHasAnnotation(aNode.itemId, PlacesUtils.LMANNO_FEEDURI)
 		);
