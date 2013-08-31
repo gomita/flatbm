@@ -23,6 +23,11 @@ var PrefsUI = {
 		return val;
 	},
 
+	openHelpURI: function() {
+		var where = document.documentElement.instantApply ? "tab" : "window";
+		openUILinkIn("http://www.xuldev.org/flatbm/options.php", where);
+	},
+
 	done: function() {
 		if (!this.changed)
 			return;

@@ -8,9 +8,10 @@
 <prefwindow id="flatbmPrefs"
             xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
             title="Flat Bookmarks - &prefs.title;"
+            ondialoghelp="PrefsUI.openHelpURI();"
             onunload="PrefsUI.done();">
 
-	<prefpane id="paneMain" flex="1">
+	<prefpane id="paneMain" helpTopic="main" flex="1">
 		<preferences onchange="PrefsUI.changed = true;">
 			<preference id="buttonSet" name="extensions.flatbm.buttonSet" type="int" />
 			<preference id="expandSubFolders" name="extensions.flatbm.expandSubFolders" type="bool" />
@@ -43,6 +44,7 @@
 		<description>* &prefs.restart;</description>
 	</prefpane>
 
+	<script type="application/x-javascript" src="chrome://browser/content/utilityOverlay.js" />
 	<script type="application/x-javascript" src="chrome://flatbm/content/options.js" />
 
 </prefwindow>
