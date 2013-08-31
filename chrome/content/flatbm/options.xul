@@ -15,6 +15,7 @@
 			<preference id="buttonSet" name="extensions.flatbm.buttonSet" type="int" />
 			<preference id="expandSubFolders" name="extensions.flatbm.expandSubFolders" type="bool" />
 			<preference id="clickOpensFolder" name="extensions.flatbm.clickOpensFolder" type="bool" />
+			<preference id="rememberForEachRoot" name="extensions.flatbm.rememberForEachRoot" type="bool" />
 			<preference id="showInSidebarMenu" name="extensions.flatbm.showInSidebarMenu" type="bool" />
 			<preference id="showInOrganizerMenu" name="extensions.flatbm.showInOrganizerMenu" type="bool" />
 		</preferences>
@@ -30,6 +31,7 @@
 		          onsynctopreference="return PrefsUI.writeButtonSet();" />
 		<checkbox label="&prefs.expandSubFolders;" preference="expandSubFolders" />
 		<checkbox label="&prefs.clickOpensFolder;" preference="clickOpensFolder" />
+		<checkbox label="&prefs.rememberForEachRoot;" preference="rememberForEachRoot" />
 		<checkbox label="&prefs.showInSidebarMenu; *" preference="showInSidebarMenu" />
 		<checkbox label="&prefs.showInOrganizerMenu; *" preference="showInOrganizerMenu" />
 		<separator class="groove" />

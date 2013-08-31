@@ -240,7 +240,8 @@ var FlatBookmarks = {
 		if (!itemId)
 			return;
 		// when clicking on a toolbar button, get the last itemId corresponding to the button
-		if (event.target.localName == "toolbarbutton") {
+		var remember = this._branch.getBoolPref("rememberForEachRoot");
+		if (remember && event.target.localName == "toolbarbutton") {
 			var pref;
 			switch (parseInt(itemId)) {
 				case PlacesUtils.toolbarFolderId         : pref = "folder.toolbar"; break;

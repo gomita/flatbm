@@ -3,6 +3,7 @@
 <!ENTITY prefs.buttonSet.goup "上へボタンを表示する">
 <!ENTITY prefs.expandSubFolders "親フォルダリスト内のサブフォルダを展開する">
 <!ENTITY prefs.clickOpensFolder "一回のクリックでフォルダを開く">
+<!ENTITY prefs.rememberForEachRoot "前回選択したフォルダをルートアイテムごとに記憶する">
 <!ENTITY prefs.showInSidebarMenu "フォルダの右クリックメニューに「サイドバーで表示」を追加する">
 <!ENTITY prefs.showInOrganizerMenu "フォルダの右クリックメニューに「ブックマークの管理...」を追加する">
 <!ENTITY prefs.restart "変更は Firefox 再起動後に反映されます。">

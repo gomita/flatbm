@@ -3,6 +3,7 @@
 <!ENTITY prefs.buttonSet.goup "Show Go Up button">
 <!ENTITY prefs.expandSubFolders "Expand sub-folders in the parent folders list">
 <!ENTITY prefs.clickOpensFolder "Open folder with a single click">
+<!ENTITY prefs.rememberForEachRoot "Remember the last selected folder for each root items">
 <!ENTITY prefs.showInSidebarMenu "Add 'Show in Sidebar' menu to context menu on folder">
 <!ENTITY prefs.showInOrganizerMenu "Add 'Organize Bookmarks…' menu to context menu on folder">
 <!ENTITY prefs.restart "Change requires restarting Firefox.">

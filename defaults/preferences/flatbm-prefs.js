@@ -1,6 +1,7 @@
 pref("extensions.flatbm.buttonSet", 1);
 pref("extensions.flatbm.expandSubFolders", false);
 pref("extensions.flatbm.clickOpensFolder", true);
+pref("extensions.flatbm.rememberForEachRoot", false);
 pref("extensions.flatbm.showInSidebarMenu", true);
 pref("extensions.flatbm.showInOrganizerMenu", true);
 pref("extensions.flatbm.place", "");
