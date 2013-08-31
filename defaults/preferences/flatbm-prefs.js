@@ -12,3 +12,4 @@ pref("extensions.flatbm.folder.toolbar", 0);
 pref("extensions.flatbm.folder.menu", 0);
 pref("extensions.flatbm.folder.unsorted", 0);
 pref("extensions.flatbm.folder.mobile", 0);
+pref("extensions.flatbm.exceptions", "");

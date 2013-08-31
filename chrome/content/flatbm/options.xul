@@ -29,6 +29,11 @@
 		          preference="buttonSet"
 		          onsyncfrompreference="return PrefsUI.readButtonSet(this);"
 		          onsynctopreference="return PrefsUI.writeButtonSet();" />
+		<checkbox id="buttonSet_pin"
+		          label="&prefs.buttonSet.pin;"
+		          preference="buttonSet"
+		          onsyncfrompreference="return PrefsUI.readButtonSet(this);"
+		          onsynctopreference="return PrefsUI.writeButtonSet();" />
 		<checkbox label="&prefs.expandSubFolders;" preference="expandSubFolders" />
 		<checkbox label="&prefs.clickOpensFolder;" preference="clickOpensFolder" />
 		<checkbox label="&prefs.rememberForEachRoot;" preference="rememberForEachRoot" />

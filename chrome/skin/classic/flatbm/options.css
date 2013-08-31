@@ -14,6 +14,16 @@
 	max-height: 14px;
 }
 
+#buttonSet_pin .checkbox-icon {
+	list-style-image: url("chrome://flatbm/skin/pin.png");
+	-moz-image-region: rect(0px, 16px, 16px, 0px);
+}
+
+#buttonSet_pin .checkbox-icon {
+	max-width: 16px;
+	max-height: 16px;
+}
+
 .checkbox-label {
 	white-space: nowrap;
 }

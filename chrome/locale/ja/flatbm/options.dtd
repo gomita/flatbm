@@ -1,6 +1,7 @@
 <!ENTITY prefs.title "オプション">
 <!ENTITY prefs.buttonSet.back "戻るボタンを表示する">
 <!ENTITY prefs.buttonSet.goup "上へボタンを表示する">
+<!ENTITY prefs.buttonSet.pin  "ピン留めボタンを表示する">
 <!ENTITY prefs.expandSubFolders "親フォルダリスト内のサブフォルダを展開する">
 <!ENTITY prefs.clickOpensFolder "一回のクリックでフォルダを開く">
 <!ENTITY prefs.rememberForEachRoot "前回選択したフォルダをルートアイテムごとに記憶する">

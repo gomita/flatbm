@@ -67,6 +67,7 @@ var FlatBookmarks = {
 		var buttonSet = this._branch.getIntPref("buttonSet");
 		document.getElementById("flatbm-goup").hidden = !(buttonSet & 1);
 		document.getElementById("flatbm-back").hidden = !(buttonSet & 2);
+		document.getElementById("flatbm-pin").hidden  = !(buttonSet & 4);
 		if (!this._branch.getBoolPref("expandSubFolders"))
 			document.getElementById("flatbm-folders").removeAttribute("onclick");
 		// init tree
@@ -295,6 +296,18 @@ var FlatBookmarks = {
 		this._setTreePlace(place);
 	},
 
+	pin: function() {
+		var itemId = this.tree.view.result.root.itemId;
+		var exceptions = this._branch.getCharPref("exceptions");
+		if (exceptions == itemId.toString()) {
+			this._branch.setCharPref("exceptions", "");
+		}
+		else {
+			this._branch.setCharPref("exceptions", itemId.toString());
+		}
+		this._setTreePlace(this.tree.place);
+	},
+
 	// check whether aItemId really exists or not
 	_validateItemId: function(aItemId) {
 		try {
@@ -314,6 +327,10 @@ var FlatBookmarks = {
 			if (!this._validateItemId(RegExp.$1))
 				// fall back to bookmarks menu
 				aPlace = this._makePlaceForFolder(PlacesUtils.bookmarksMenuFolderId);
+			// flat or tree
+			var flat = this._branch.getCharPref("exceptions") != RegExp.$1;
+			this.tree.setAttribute("flatList", flat.toString());
+			document.getElementById("flatbm-pin").checked = !flat;
 		}
 		var tree = this.tree;
 		tree.place = aPlace;
@@ -396,6 +413,8 @@ var FlatBookmarks = {
 		              itemId != this._mobileRootId;
 		// enable back button if not in search mode and having back history
 		var canBack = !this._inSearchMode && this._backHistory.length >= 2;
+		// enable pin button if not in search mode and normal folder
+		var canPin = !this._inSearchMode && itemId != -1;
 		var setElementDisabled = function(aEltId, aDisabled) {
 			var elt = document.getElementById(aEltId);
 			if (aDisabled)
@@ -405,6 +424,7 @@ var FlatBookmarks = {
 		};
 		setElementDisabled("flatbmCmd:goUp", !canGoUp);
 		setElementDisabled("flatbmCmd:back", !canBack);
+		setElementDisabled("flatbmCmd:pin",  !canPin);
 	},
 
 	_nodeIsLivemark: function(aNode) {

@@ -11,6 +11,7 @@ var PrefsUI = {
 		switch (aTarget.id) {
 			case "buttonSet_goup": return val & 1;
 			case "buttonSet_back": return val & 2;
+			case "buttonSet_pin" : return val & 4;
 		}
 	},
 
@@ -18,6 +19,7 @@ var PrefsUI = {
 		var val = 0;
 		if (this._element("buttonSet_goup").checked) val |= 1;
 		if (this._element("buttonSet_back").checked) val |= 2;
+		if (this._element("buttonSet_pin").checked)  val |= 4;
 		return val;
 	},
 

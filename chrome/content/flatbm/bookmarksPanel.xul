@@ -14,6 +14,7 @@
 		<commandset id="flatbm-commandset">
 			<command id="flatbmCmd:goUp" oncommand="FlatBookmarks.goUp();" />
 			<command id="flatbmCmd:back" oncommand="FlatBookmarks.back();" />
+			<command id="flatbmCmd:pin"  oncommand="FlatBookmarks.pin();" />
 		</commandset>
 
 		<keyset id="flatbm-keyset">
@@ -33,6 +34,7 @@
 				<toolbarbutton id="editBMPanel_unfiledRootItem" />
 				<toolbarbutton id="mobileRootItem" class="folder-icon" hidden="true" />
 				<spacer flex="1" />
+				<toolbarbutton id="flatbm-pin"  class="plain" command="flatbmCmd:pin" type="checkbox" autoCheck="false" />
 				<toolbarbutton id="flatbm-back" class="plain" command="flatbmCmd:back" />
 				<toolbarbutton id="flatbm-goup" class="plain" command="flatbmCmd:goUp" />
 			</hbox>
