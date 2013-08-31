@@ -375,6 +375,8 @@ var FlatBookmarks = {
 		this._branch.setCharPref("place", aPlace);
 		// remember the itemId for each root items
 		if (!folder) alert("Assertion failed!\nfolder is undefined");	// #debug
+		if (PlacesUtils.nodeIsQuery(node))
+			return;
 		var pref;
 		switch (parseInt(folder.getAttribute("itemId"))) {
 			case PlacesUtils.toolbarFolderId         : pref = "folder.toolbar"; break;
