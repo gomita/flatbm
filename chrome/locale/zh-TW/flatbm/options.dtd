@@ -1,8 +1,10 @@
 <!ENTITY prefs.title "選項">
 <!ENTITY prefs.buttonSet.back "顯示返回按鈕">
 <!ENTITY prefs.buttonSet.goup "顯示上移一層按鈕">
+<!ENTITY prefs.buttonSet.pin "顯示釘選按鈕">
 <!ENTITY prefs.expandSubFolders "在母資料夾清單中展開子資料夾">
 <!ENTITY prefs.clickOpensFolder "點一下即開啟資料夾">
+<!ENTITY prefs.rememberForEachRoot "記住每個根目錄中最後選取的資料夾">
 <!ENTITY prefs.showInSidebarMenu "在資料夾的右鍵選單中加入「顯示於側邊欄」">
 <!ENTITY prefs.showInOrganizerMenu "在資料夾的右鍵選單中加入「管理書籤...」">
-<!ENTITY prefs.restart "所做的變更需要重新啟動 Firefox。">
+<!ENTITY prefs.restart "此變更須重新啟動 Firefox。">

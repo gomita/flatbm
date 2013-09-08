@@ -1,7 +1,7 @@
 <!ENTITY prefs.title "Options">
 <!ENTITY prefs.buttonSet.back "Show Back button">
 <!ENTITY prefs.buttonSet.goup "Show Go Up button">
-<!ENTITY prefs.buttonSet.pin  "Show Pin button">
+<!ENTITY prefs.buttonSet.pin "Show Pin button">
 <!ENTITY prefs.expandSubFolders "Expand sub-folders in the parent folders list">
 <!ENTITY prefs.clickOpensFolder "Open folder with a single click">
 <!ENTITY prefs.rememberForEachRoot "Remember the last selected folder for each root items">

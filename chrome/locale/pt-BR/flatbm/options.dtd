@@ -1,8 +1,10 @@
 <!ENTITY prefs.title "Opções">
 <!ENTITY prefs.buttonSet.back "Exibir o botão Voltar">
 <!ENTITY prefs.buttonSet.goup "Exibir o botão Avançar">
+<!ENTITY prefs.buttonSet.pin "Exibir o botão Alfinete">
 <!ENTITY prefs.expandSubFolders "Expandir as sub-pastar no diretório de pastas">
 <!ENTITY prefs.clickOpensFolder "Abrir pastas com um único clique">
+<!ENTITY prefs.rememberForEachRoot "Lembrar a última pasta selecionada em cada item de raiz">
 <!ENTITY prefs.showInSidebarMenu "Acrescentar &quot;Exibir na Barra Lateral&quot; ao menu de contexto da pasta">
 <!ENTITY prefs.showInOrganizerMenu "Acrescentar 'Organizar favoritos' ao menu de contexto da pasta">
 <!ENTITY prefs.restart "A alteração requer o reinício do Firefox.">

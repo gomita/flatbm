@@ -1,8 +1,10 @@
 <!ENTITY prefs.title "Možnosti">
 <!ENTITY prefs.buttonSet.back "Zobrazit tl. Zpět">
 <!ENTITY prefs.buttonSet.goup "Zobrazit tl. Nahoru">
+<!ENTITY prefs.buttonSet.pin "Zobrazit připínací tlačítko">
 <!ENTITY prefs.expandSubFolders "Otevírat podsložky v seznamu složek">
 <!ENTITY prefs.clickOpensFolder "Otevřít složku jedním kliknutím">
+<!ENTITY prefs.rememberForEachRoot "Pamatovat si poslední vybranou složku pro každé kořenové umístění">
 <!ENTITY prefs.showInSidebarMenu "Přidat volbu 'Zobrazit v postranní liště' do nabídky složky">
 <!ENTITY prefs.showInOrganizerMenu "Přidat volbu 'Zobrazit všechny záložky' do nabídky složky">
 <!ENTITY prefs.restart "Změna vyžaduje restart Firefoxu.">
