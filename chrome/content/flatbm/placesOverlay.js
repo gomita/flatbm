@@ -54,17 +54,17 @@ var FlatBookmarksOverlay = {
 		if (popup.id == "goPopup")
 			// don't add extra items to 'History' menu
 			return;
-		if (popup.lastChild.className == "flatbm-extra-item")
+		if (popup.lastChild.classList.contains("flatbm-extra-item"))
 			// avoids duplication of extra menu items for same popup
 			return;
 		if (PlacesUtils.nodeIsTagQuery(popup._placesNode))
 			// don't add extra items if popup is of a tag
 			return;
-		if (popup.lastChild.className != "openintabs-menuitem")
+		if (!popup.lastChild.classList.contains("openintabs-menuitem"))
 			popup.appendChild(document.createElement("menuseparator"));
 		if (this._showInSidebarMenu) {
 			var elt = document.createElement("menuitem");
-			elt.className = "flatbm-extra-item";
+			elt.classList.add("flatbm-extra-item");
 			elt.setAttribute("label", 
 				document.getElementById("flatbmContext_showInSidebar").label
 			);
@@ -78,7 +78,7 @@ var FlatBookmarksOverlay = {
 		}
 		if (this._showInOrganizerMenu) {
 			var elt = document.createElement("menuitem");
-			elt.className = "flatbm-extra-item";
+			elt.classList.add("flatbm-extra-item");
 			elt.setAttribute("label", 
 				document.getElementById("flatbmContext_showInOrganizer").label
 			);
