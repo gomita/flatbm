@@ -7,7 +7,7 @@
 		<em:id>flatbm@xuldev.org</em:id>
 		<em:type>2</em:type>
 		<em:name>Flat Bookmarks</em:name>
-		<em:version>1.10</em:version>
+		<em:version>1.11</em:version>
 		<em:description>Makes the Bookmarks and History Sidebars a flat list view.</em:description>
 		<em:creator>Gomita</em:creator>
 		<em:localized>
@@ -143,7 +143,7 @@
 			<Description>
 				<em:locale>zh-TW</em:locale>
 				<em:name>Flat Bookmarks</em:name>
-				<em:description>Makes the Bookmarks and History Sidebars a flat list view.</em:description>
+				<em:description>以平鋪方式在側邊欄檢視「書籤」與「瀏覽歷史記錄」。</em:description>
 				<em:creator>Gomita</em:creator>
 				<em:translator>terryweng</em:translator>
 				<em:homepageURL>http://www.xuldev.org/flatbm/</em:homepageURL>
@@ -154,8 +154,8 @@
 		<em:targetApplication>
 			<Description>
 				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-				<em:minVersion>17.0</em:minVersion>
-				<em:maxVersion>26.0a1</em:maxVersion>
+				<em:minVersion>24.0</em:minVersion>
+				<em:maxVersion>29.0a1</em:maxVersion>
 			</Description>
 		</em:targetApplication>
 	</Description>
