@@ -1,0 +1,10 @@
+<!ENTITY prefs.title "Opties">
+<!ENTITY prefs.buttonSet.back "Knop Terug weergeven">
+<!ENTITY prefs.buttonSet.goup "Knop Omhoog weergeven">
+<!ENTITY prefs.buttonSet.pin "Knop Vastzetten weergeven">
+<!ENTITY prefs.expandSubFolders "Submappen in lijst met hoofdmappen uitvouwen">
+<!ENTITY prefs.clickOpensFolder "Map openen door klik">
+<!ENTITY prefs.rememberForEachRoot "Laatst geselecteerde map onthouden voor elk gronditem">
+<!ENTITY prefs.showInSidebarMenu "Menu-onderdeel ‘In zijbalk weergeven’ aan contextmenu van map weergeven">
+<!ENTITY prefs.showInOrganizerMenu "Menu-onderdeel ‘Bladwijzers organiseren…’ aan contextmenu van map weergeven">
+<!ENTITY prefs.restart "Wijziging vereist herstart van Firefox">

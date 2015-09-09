@@ -1,0 +1,5 @@
+<!ENTITY flatbm.showInSidebar.label "In zijbalk weergeven">
+<!ENTITY flatbm.showInSidebar.accesskey "Z">
+<!-- LOCALIZATION NOTE : This should be same as organizeBookmarks.label in browser.dtd -->
+<!ENTITY flatbm.showInOrganizer.label "Bladwijzers organiseren…">
+<!ENTITY flatbm.showInOrganizer.accesskey "B">
