@@ -30,7 +30,7 @@ var FlatBookmarks = {
 			window.eval(
 				"SidebarUtils.handleTreeClick = " + 
 				SidebarUtils.handleTreeClick.toSource().replace(
-					"tbo.view.toggleOpenState(row.value);", ""
+					"tbo.view.toggleOpenState(cell.row);", ""
 				)
 			);
 		}
