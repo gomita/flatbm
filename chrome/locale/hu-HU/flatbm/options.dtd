@@ -1,8 +1,10 @@
 <!ENTITY prefs.title "Beállítások">
 <!ENTITY prefs.buttonSet.back "Ugrás vissza gomb megjelenítése">
 <!ENTITY prefs.buttonSet.goup "Ugrás a gyökérkönyvtárra gomb megjelenítése">
+<!ENTITY prefs.buttonSet.pin "Kitűzőgombok megjelenítése">
 <!ENTITY prefs.expandSubFolders "Almappák kibontása a szülőkönyvtár listában">
 <!ENTITY prefs.clickOpensFolder "Mappa megnyitása egy kattintással">
+<!ENTITY prefs.rememberForEachRoot "Legutolsó kijelölt mappa megjegyzése minden gyökérelemnél">
 <!ENTITY prefs.showInSidebarMenu "'Megjelenítés az oldalsávban' menüpont hozzáadása a mappa helyi menüjéhez">
 <!ENTITY prefs.showInOrganizerMenu "'Könyvjelzők kezelése...' menüpont hozzáadása a mappa helyi menüjéhez">
 <!ENTITY prefs.restart "A módosítás érvényesítéséhez a böngésző újraindítása szükséges.">
