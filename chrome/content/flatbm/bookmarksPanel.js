@@ -59,8 +59,16 @@ var FlatBookmarks = {
 			this._mobileRootId = mobileRoot[0];
 			setElementItemId("mobileRootItem", this._mobileRootId);
 			var button = document.getElementById("mobileRootItem");
-			var bundle = Services.strings.createBundle("chrome://weave/locale/services/sync.properties");
-			button.setAttribute("_title", bundle.GetStringFromName("mobile.label"));
+			try {
+				// [Firefox51-]
+				var bundle = Services.strings.createBundle("chrome://weave/locale/services/sync.properties");
+				button.setAttribute("_title", bundle.GetStringFromName("mobile.label"));
+			}
+			catch (ex) {
+				// [Firefox52+]
+				var bundle = Services.strings.createBundle("chrome://places/locale/places.properties");
+				button.setAttribute("_title", bundle.GetStringFromName("MobileBookmarksFolderTitle"));
+			}
 			button.hidden = false;
 		}
 		// init go-up and back buttons
