@@ -1,0 +1,10 @@
+<!ENTITY prefs.title "Asetukset">
+<!ENTITY prefs.buttonSet.back "Näytä 'takaisin' -nappi">
+<!ENTITY prefs.buttonSet.goup "Näytä 'ylöspäin' -nappi">
+<!ENTITY prefs.buttonSet.pin "Näytä kiinnitysnappi">
+<!ENTITY prefs.expandSubFolders "Laajenna alikansiot emokansioluettelossa">
+<!ENTITY prefs.clickOpensFolder "Avaa kansio yhdellä napsautuksella">
+<!ENTITY prefs.rememberForEachRoot "Muista kunkin kategorian viimeisin valittu kansio">
+<!ENTITY prefs.showInSidebarMenu "Lisää 'Näytä sivupalkissa' -valikko kansion pikavalikkoon">
+<!ENTITY prefs.showInOrganizerMenu "Lisää 'Järjestä kirjanmerkit...' -valikko kansion pikavalikkoon">
+<!ENTITY prefs.restart "Muutos edellyttää Firefoxin uudelleenkäynnistystä.">

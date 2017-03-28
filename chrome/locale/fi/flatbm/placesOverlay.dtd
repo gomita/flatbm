@@ -1,0 +1,5 @@
+<!ENTITY flatbm.showInSidebar.label "Näytä sivupalkissa">
+<!ENTITY flatbm.showInSidebar.accesskey "H">
+<!-- LOCALIZATION NOTE : This should be same as organizeBookmarks.label in browser.dtd -->
+<!ENTITY flatbm.showInOrganizer.label "Järjestä kirjanmerkit…">
+<!ENTITY flatbm.showInOrganizer.accesskey "R">
