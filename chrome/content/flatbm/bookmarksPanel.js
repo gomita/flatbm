@@ -43,9 +43,12 @@ var FlatBookmarks = {
 		// init search bar
 		var textbox = document.getElementById("search-box");
 		var label = document.getElementById("sidebar-search-label");
-		textbox.setAttribute("placeholder", label.value.replace(/:$/, ""));
-		textbox.setAttribute("accesskey", label.getAttribute("accesskey"));
-		label.hidden = true;
+		if (label) {
+			// Firefox<56
+			textbox.setAttribute("placeholder", label.value.replace(/:$/, ""));
+			textbox.setAttribute("accesskey", label.getAttribute("accesskey"));
+			label.hidden = true;
+		}
 		// set itemId of root folders
 		var setElementItemId = function(aEltId, aItemId) {
 			document.getElementById(aEltId).setAttribute("itemId", aItemId);

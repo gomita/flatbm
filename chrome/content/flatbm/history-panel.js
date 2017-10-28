@@ -40,9 +40,12 @@ var FlatHistory = {
 		);
 		// init search bar
 		var label = document.getElementById("sidebar-search-label");
-		gSearchBox.setAttribute("placeholder", label.value.replace(/:$/, ""));
-		gSearchBox.setAttribute("accesskey", label.getAttribute("accesskey"));
-		label.hidden = true;
+		if (label) {
+			// Firefox<56
+			gSearchBox.setAttribute("placeholder", label.value.replace(/:$/, ""));
+			gSearchBox.setAttribute("accesskey", label.getAttribute("accesskey"));
+			label.hidden = true;
+		}
 		// init 'View' button
 		var viewButton = document.getElementById("viewButton");
 		var viewMenu   = document.getElementById("viewMenu");
