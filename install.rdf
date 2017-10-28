@@ -7,7 +7,7 @@
 		<em:id>flatbm@xuldev.org</em:id>
 		<em:type>2</em:type>
 		<em:name>Flat Bookmarks</em:name>
-		<em:version>1.14</em:version>
+		<em:version>1.15</em:version>
 		<em:description>Makes the Bookmarks and History Sidebars a flat list view.</em:description>
 		<em:creator>Gomita</em:creator>
 		<em:localized>
@@ -175,7 +175,7 @@
 			<Description>
 				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
 				<em:minVersion>38.0</em:minVersion>
-				<em:maxVersion>54.0a1</em:maxVersion>
+				<em:maxVersion>56.*</em:maxVersion>
 			</Description>
 		</em:targetApplication>
 	</Description>
